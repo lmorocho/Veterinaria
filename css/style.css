@@ -1,0 +1,7 @@
+.fondo {
+    background-image: url('img/russian.jpg'); /* Reemplaza con tu URL o ruta local */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* 100% del alto de la ventana */
+  }
