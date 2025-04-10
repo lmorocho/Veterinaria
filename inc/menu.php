@@ -4,7 +4,8 @@
 ?>
 
     <!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-body">-->
-    <nav class="navbar bg-dark navbar-expand navbar-dark" data-bs-theme="dark">        
+    <!--<nav class="navbar bg-dark navbar-expand navbar-dark" data-bs-theme="dark">-->
+    <nav class="navbar bg-dark navbar-expand" data-bs-theme="dark">        
         <!--<nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-dark">-->
             <!--Primer DIV-->
             <div class="container-fluid">
@@ -24,7 +25,7 @@
                                 Gestión & Administración
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Agenda de Turnos inteligente</a></li>
+                                <li><a class="dropdown-item" href="agenda_turnos.php">Agenda de Turnos inteligente</a></li>
                                 <li><a class="dropdown-item" href="#">Historial médico digital</a></li>
                                 <li><a class="dropdown-item" href="#">Ficha completa de clientes y mascotas</a></li>
                                 <li><a class="dropdown-item" href="#">Control de stock</a></li>

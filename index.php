@@ -29,26 +29,23 @@
         <div class="alert alert-secondary" role="alert">
             <!--<h5>Nosotros cuidamos tus mascotas!</h5>-->
             <div class="row">
-                <div class="col-12">
-                    <!--<link href="css/style.css" rel="stylesheet">--> 
+                <!--<div class="col-12">
+                    <link href="css/style.css" rel="stylesheet">
+                </div>-->
+                <div class="col-4">
+                    <button class="btn btn-link" type="button">Link1</button>
                 </div>
                 <div class="col-4">
-                     
-                        <button class="btn btn-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Link1</button>
+                    <button class="btn btn-link" type="button">Link2</button>
                 </div>
                 <div class="col-4">
-                   
-                    <button class="btn btn-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Link2</button>
-                </div>
-                <div class="col-4">
-                    
-                    <!--Barra de navegación-->
+                    <!--Barra lateral izquierda navegación-->
                     <?php acercade(); ?>
                 </div>
-            </div>
+            </div>  
         </div>
         <div class="alert alert-dark" role="alert">
-            Texto
+                Texto Ejemplo
         </div>
     </div>
     
