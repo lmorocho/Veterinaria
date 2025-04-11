@@ -9,7 +9,10 @@
         <!--<nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-dark">-->
             <!--Primer DIV-->
             <div class="container-fluid">
-                <a class="navbar-brand" href="https://demo.templatemonster.com/es/demo/342435.html?_gl=1*1h969di*_gcl_au*MTI5MzAzOTAzOS4xNzQzMjE0MTg1*_ga*MTM0MTIzOTcxNC4xNzQzMjE0MTgx*_ga_FTPYEGT5LY*MTc0MzIxNDE4MC4xLjEuMTc0MzIxNDI1OS41My4wLjA"><b>PET HOUSE</b></a>
+                <a class="navbar-brand" href="https://demo.templatemonster.com/es/demo/342435.html?_gl=1*1h969di*_gcl_au*MTI5MzAzOTAzOS4xNzQzMjE0MTg1*_ga*MTM0MTIzOTcxNC4xNzQzMjE0MTgx*_ga_FTPYEGT5LY*MTc0MzIxNDE4MC4xLjEuMTc0MzIxNDI1OS41My4wLjA">
+                <img src="img/Log_PetHOUSE.png" alt="Logo" width="34" height="32" class="d-inline-block align-text-top">
+                    <b>PET HOUSE</b>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -69,7 +72,11 @@
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#">Integración con Redes Sociales</a></li>
                             </ul>
-                            
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav me-auto-e">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-disabled="true" aria-current="page" href="alta_user.php"><b>>> Registrarse << </b></a>
                         </li>
                     </ul>
                     <form class="d-flex" role="search">
