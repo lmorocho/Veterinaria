@@ -7,8 +7,9 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <?php
         require("inc/menu.php");
-        require("inc/acerca.php");
-        require("inc/carrusel.php")
+        require("inc/carrusel.php");
+        require("inc/acerca_left.php");
+        require("inc/acerca_right.php")
     ?>
 </head>
 <!--<body class="container">--> <!--Contenido dentro del container--> 
@@ -33,14 +34,16 @@
                     <link href="css/style.css" rel="stylesheet">
                 </div>-->
                 <div class="col-4">
-                    <button class="btn btn-link" type="button">Link1</button>
+                    <!--<button class="btn btn-link" type="button">Link1</button>-->
+                    <!--Barra lateral izquierda navegación-->
+                    <?php acercaderight(); ?>
                 </div>
                 <div class="col-4">
                     <button class="btn btn-link" type="button">Link2</button>
                 </div>
                 <div class="col-4">
                     <!--Barra lateral izquierda navegación-->
-                    <?php acercade(); ?>
+                    <?php acercadeleft(); ?>
                 </div>
             </div>  
         </div>

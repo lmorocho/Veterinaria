@@ -91,14 +91,14 @@
                 <!--<div class="alert alert-warning text-center" role="alert">        
                     Ingrese los nuevos datos
                 </div>-->
-                <div class="row"> <!-- Agregamos las subcolumnas sobre la columna '6' del centro-->
+                <!-- <div class="row">  Agregamos las subcolumnas sobre la columna '6' del centro
                     <div class="col-6 text-center">
                         <button type="button" class="btn btn-link">Registrarse</button>
                     </div>
                     <div class="col-6 text-center">
                         <button type="button" class="btn btn-link">Olvidé mi Clave</button>
                     </div>
-                </div>
+                </div>-->
             </form>
         </div>
         <div class="col-3"></div>
