@@ -9,6 +9,7 @@
         require("inc/menu.php");
         require("inc/carrusel.php");
         require("inc/acerca_left.php");
+        require("inc/acerca_top.php");
         require("inc/acerca_right.php")
     ?>
 </head>
@@ -39,7 +40,8 @@
                     <?php acercaderight(); ?>
                 </div>
                 <div class="col-4">
-                    <button class="btn btn-link" type="button">Link2</button>
+                    <!--<button class="btn btn-link" type="button">Link2</button>-->
+                    <?php acercadetop(); ?>
                 </div>
                 <div class="col-4">
                     <!--Barra lateral izquierda navegación-->
