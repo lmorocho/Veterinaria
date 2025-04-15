@@ -20,6 +20,8 @@
         <div class="col-6">
             <form action="pagina_destino.php" method="get">
                 <br><label><h4>Formulario de Ingreso</h4></label>
+                <!-- Línea -->
+                <!--<hr size="2px" color="black">-->
                 <!-- Alta Dueño-->
                 <div class="mb-3">
                     <label for="basic-url" class="form-label">Ingrese el Nombre del dueño</label>
@@ -44,12 +46,27 @@
                             <!--<div class="form-text" id="basic-addon4">Example help text goes outside the input group.</div>-->
                         </div>
                         <div class="col-6">
-                            <label for="basic-url" class="form-label">Ingrese la Raza de la mascota</label>
+                            <label for="basic-url" class="form-label">Ingrese el tipo de la mascota</label>
                             <div class="input-group">
-                                <span class="input-group-text" id="basic-addon3">raza_mascota:</span>
+                                <span class="input-group-text" id="basic-addon3">tipo_mascota:</span>
                                 <!--<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">-->
-                                <input type="text" class="form-control" placeholder="Escriba el nombre" aria-label="razapet">
+                                <!--<input type="text" class="form-control" placeholder="Escriba el nombre" aria-label="razatypepet">-->
+                                <select class="form-select" aria-label="razatypopet">
+                                    <option selected>Seleccione el tipo</option>
+                                    <option value="1">Perro</option>
+                                    <option value="2">Gato</option>
+                                    <!--<option value="3">Three</option>-->
+                                </select>
                             </div>
+                            <!--<div class="form-group">
+                                <label for="selector1">Ingrese el tipo de la mascota</label>
+                                <select name="selector1" id="selector1">
+                                    <option value="<Perro">Perro</option>
+                                    <option value="Gato">Gato</option>
+                                    <option value="Queja">Queja</option>
+                                </select>
+                            </div>-->
+                           
                         </div>
                     </div>    
                 </div>
