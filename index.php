@@ -10,7 +10,8 @@
         require("inc/carrusel.php");
         require("inc/acerca_left.php");
         require("inc/acerca_top.php");
-        require("inc/acerca_right.php")
+        require("inc/acerca_right.php");
+        require("inc/chat_left.php")
     ?>
 </head>
 <!--<body class="container">--> <!--Contenido dentro del container--> 
@@ -34,26 +35,50 @@
                 <!--<div class="col-12">
                     <link href="css/style.css" rel="stylesheet">
                 </div>-->
-                <div class="col-4">
+                <div class="col-3">
                     <!--<button class="btn btn-link" type="button">Link1</button>-->
                     <!--Barra lateral izquierda navegación-->
                     <?php acercaderight(); ?>
                 </div>
-                <div class="col-4">
+                <div class="col-3">
                     <!--<button class="btn btn-link" type="button">Link2</button>-->
                     <?php acercadetop(); ?>
                 </div>
-                <div class="col-4">
+                <div class="col-3">
                     <!--Barra lateral izquierda navegación-->
                     <?php acercadeleft(); ?>
+                </div>
+                <div class="col-3">
+                    <!--<button class="btn btn-link" type="button">Chat Veterinaria</button>-->
+                    <?php chatbot(); ?>
                 </div>
             </div>  
         </div>
         <div class="alert alert-dark" role="alert">
-                Texto Ejemplo
+            Texto Ejemplo
         </div>
     </div>
-    
+    <div class="container text-center">
+        <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+        <div class="row">
+            <div class="col-md-8">.col-md-8</div>
+            <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+        </div>
+
+        <!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
+        <div class="row">
+            <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+            <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+            <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+        </div>
+
+        <!-- Columns are always 50% wide, on mobile and desktop -->
+        <div class="row">
+            <div class="col-6">.col-6</div>
+            <div class="col-6">.col-6</div>
+        </div>
+    </div>
     <script src="js/bootstrap.bundle.min.js"></script>
+    <!--<script src="js/chatbot.js"></script>-->
 </body>
 </html>

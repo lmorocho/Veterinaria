@@ -5,3 +5,30 @@
     background-repeat: no-repeat;
     height: 100vh; /* 100% del alto de la ventana */
   }
+
+  .chat-container {
+    max-width: 500px;
+    margin: 50px auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 20px;
+  }
+  .message {
+    padding: 10px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    max-width: 75%;
+  }
+  .user-message {
+    background-color: #d1ecf1;
+    align-self: flex-end;
+  }
+  .bot-message {
+    background-color: #d4edda;
+    align-self: flex-start;
+  }
+  .chat-box {
+    display: flex;
+    flex-direction: column;
+  }

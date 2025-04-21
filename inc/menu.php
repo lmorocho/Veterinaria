@@ -28,7 +28,8 @@
                                 Gestión & Administración
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="agenda_turnos.php">Agenda de Turnos inteligente</a></li>
+                                <li><a class="dropdown-item" href="alta_cliente.php">Registración de Clientes & Mascotas</a></li>
+                                <li><a class="dropdown-item" href="alta_turno_calendario.php">Agenda de Turnos inteligente</a></li>
                                 <li><a class="dropdown-item" href="#">Historial médico digital</a></li>
                                 <li><a class="dropdown-item" href="#">Ficha completa de clientes y mascotas</a></li>
                                 <li><a class="dropdown-item" href="#">Control de stock</a></li>
@@ -46,7 +47,7 @@
                                 Gestión Clientes
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Perfil de usuario</a></li>
+                                <li><a class="dropdown-item" href="#">Perfil y Rol del Usuario</a></li>
                                 <li><a class="dropdown-item" href="#">Sistema de seguimiento post-atención</a></li>
                                 <li><a class="dropdown-item" href="#">Chat con la veterinaria</a></li>
                                 <li><a class="dropdown-item" href="#">Programa de fidelización</a></li>
@@ -67,7 +68,7 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Venta online de productos</a></li>
                                 <li><a class="dropdown-item" href="#">Módulo de Emergencias</a></li>
-                                <li><a class="dropdown-item" href="#">Gestión de adopciones</a></li>
+                                <!--<li><a class="dropdown-item" href="#">Gestión de adopciones</a></li>-->
                                 <li><a class="dropdown-item" href="#">Notificaciones y alertas personalizadas</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#">Integración con Redes Sociales</a></li>
@@ -76,12 +77,12 @@
                     </ul>
                     <ul class="navbar-nav me-auto-e">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-disabled="true" aria-current="page" href="alta_user.php"><b>>> Registrarse << </b></a>
+                            <a class="nav-link active" aria-disabled="true" aria-current="page" href="alta_cliente.php"><b>>> Registrarse << </b></a>
                         </li>
                     </ul>
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Buscar contenido" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Buscar</button> 
+                        <button class="btn btn-outline-warning" type="submit">Buscar</button> 
                     </form>
                 </div>    
             </div>
