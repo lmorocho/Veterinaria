@@ -10,7 +10,7 @@
         calendario.innerHTML = `Turnos para el ${this.value}:<br>- 10:00 - Firulais<br>- 12:30 - Luna`;
     });
     </script>
-    <p></p>
+    
 <?php
     }
 ?>

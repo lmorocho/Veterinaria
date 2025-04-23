@@ -28,7 +28,7 @@
                     <label for="basic-url" class="form-label"></label>
                     <div class="input-group">
                         <span class="input-group-text" id="basic-addon3">DNI:</span>
-                        <input type="text" class="form-control" placeholder="Escriba el DNI" aria-label="dnicliente" required>
+                        <input type="number" class="form-control" placeholder="Escriba el DNI" aria-label="dnicliente" required>
                     </div>
                     <!--<label for="basic-url" class="form-label">Fecha Nacimiento:</label>-->
                     <label for="basic-url" class="form-label"></label>

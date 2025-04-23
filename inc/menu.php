@@ -9,7 +9,8 @@
         <!--<nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-dark">-->
             <!--Primer DIV-->
             <div class="container-fluid">
-                <a class="navbar-brand" href="https://demo.templatemonster.com/es/demo/342435.html?_gl=1*1h969di*_gcl_au*MTI5MzAzOTAzOS4xNzQzMjE0MTg1*_ga*MTM0MTIzOTcxNC4xNzQzMjE0MTgx*_ga_FTPYEGT5LY*MTc0MzIxNDE4MC4xLjEuMTc0MzIxNDI1OS41My4wLjA">
+                <!--<a class="navbar-brand" href="https://demo.templatemonster.com/es/demo/342435.html?_gl=1*1h969di*_gcl_au*MTI5MzAzOTAzOS4xNzQzMjE0MTg1*_ga*MTM0MTIzOTcxNC4xNzQzMjE0MTgx*_ga_FTPYEGT5LY*MTc0MzIxNDE4MC4xLjEuMTc0MzIxNDI1OS41My4wLjA">-->
+                <a class="navbar-brand" href="#">
                 <img src="img/Log_PetHOUSE.png" alt="Logo" width="34" height="32" class="d-inline-block align-text-top">
                     <b>PET HOUSE</b>
                 </a>
