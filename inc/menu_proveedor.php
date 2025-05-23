@@ -1,12 +1,12 @@
 
 <?php
     //Declaramos la función
-    function menu(){   
+    function menu_proveedor(){   
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="index.php">
-      <img src="img/Log_PetHOUSE.png" alt="Logo" width="34" height="32" class="d-inline-block align-text-top">
+    <a class="navbar-brand" href="#">
+    <img src="img/Log_PetHOUSE.png" alt="Logo" width="34" height="32" class="d-inline-block align-text-top">
       <b>Veterinaria</b>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -14,12 +14,12 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link" href="index.php">Inicio</a></li>
-        <li class="nav-item"><a class="nav-link" href="cliente_mascota.php">Registro General</a></li>
+        <li class="nav-item"><a class="nav-link" href="login_cliente.php">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="login_cliente.php">Registro General</a></li>
         <!--<li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Administrador</a></li>
         <li class="nav-item"><a class="nav-link" href="empleado_dashboard.php">Empleado</a></li>
-        <li class="nav-item"><a class="nav-link" href="cliente_dashboard.php">Cliente</a></li>
-        <li class="nav-item"><a class="nav-link" href="proveedor_dashboard.php">Proveedor</a></li>-->
+        <li class="nav-item"><a class="nav-link" href="cliente_dashboard.php">Cliente</a></li>-->
+        <li class="nav-item"><a class="nav-link" href="proveedor_dashboard.php">Proveedor</a></li>
       </ul>
       <?php if (isset($_SESSION['cliente'])): ?>
         <span class="navbar-text text-light me-3">

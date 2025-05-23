@@ -60,7 +60,7 @@
                 <span class="visually-hidden">Next</span>
             </button>
     </div>-->
-
+    <br>
 <?php
     }
 ?>
