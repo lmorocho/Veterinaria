@@ -1,60 +1,52 @@
+<?php
+include("conexion.php");
+session_start();
+
+// Verifica que haya sesión activa y que el rol sea Cliente
+if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'Cliente') {
+  header("Location: login_cliente.php");
+  exit;
+}
+
+$usuario = $_SESSION['usuario']['Nombre'] ?? 'Usuario';
+$rol_nombre = $_SESSION['rol'] ?? '';
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Panel de Cliente</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!--Toma la sesion del Cliente-->
-  <?php
-  session_start();
-  include("conexion.php");
-
-  if (!isset($_SESSION['cliente'])) {
-    header("Location: login_cliente.php");
-    exit;
-  }
-
-  $usuario = $_SESSION['cliente']['Nombre'];
-  $id_rol = $_SESSION['cliente']['ID_Rol'];
-
-  // Obtener el nombre del rol desde la base de datos
-  $rol_nombre = '';
-  $rol_stmt = $conexion->prepare("SELECT Nombre_Rol FROM Rol_Usuario WHERE ID_Rol = ?");
-  $rol_stmt->bind_param("i", $id_rol);
-  $rol_stmt->execute();
-  $rol_result = $rol_stmt->get_result();
-  if ($rol_result->num_rows === 1) {
-    $row = $rol_result->fetch_assoc();
-    $rol_nombre = $row['Nombre_Rol'];
-  }
-  ?>
-
-  <?php
-    require("inc/menu_cliente.php");
-    require("inc/menu.php");
-    //require("inc/carrusel.php");
-  ?>
+  <?php require("inc/menu_cliente.php"); ?>
 </head>
 <body>
 
-  <?php
-    // Incluir menú según tipo de rol
-    if (isset($_SESSION['cliente']) && $_SESSION['cliente']['ID_Rol'] == 3) {
-      //include('menu_cliente.php');
-      menu_cliente();
-    } else {
-      //include('menu.php');
-      menu();
-    }
-  ?>
-
-  <div class="alert alert-warning text-center fst-italic" role="alert">
-        <h4>Bienvenido <?php echo $usuario; ?>, al Sistema de Veterinaria.</h4>
-        <p>Este es el panel de <?php echo $rol_nombre; ?>.</p>
+<!-- Barra de navegación -->
+<?php menu_cliente(); ?> 
+<!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Veterinaria</a>
+    <div class="collapse navbar-collapse justify-content-end">
+      <ul class="navbar-nav">
+        <li class="nav-item text-light nav-link">
+          <?php echo 'Usuario: <strong>' . htmlspecialchars($usuario) . '</strong>'; ?>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-outline-light ms-2" href="logout.php">Cerrar sesión</a>
+        </li>
+      </ul>
+    </div>
   </div>
+</nav>-->
 
-  <script src="js/bootstrap.bundle.min.js"></script>
+<!-- Contenido principal -->
+<!--<div class="container mt-4">
+</div>-->
+<div class="alert alert-warning text-center fst-italic" role="alert">
+    <h4>Bienvenido <?php echo htmlspecialchars($usuario); ?> al Sistema de Veterinaria.</h4>
+    <p>Este es el panel de <strong><?php echo htmlspecialchars($rol_nombre); ?></strong>.</p>
+</div>
 
+<script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
