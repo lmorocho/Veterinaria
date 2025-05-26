@@ -153,16 +153,6 @@ if ($rol === 'Cliente' && $id_cliente) {
           </div>
           <div id="mascotas-container"></div>
           <button type="submit" class="btn btn-primary">Guardar</button>
-          <a href="<?php 
-              if (!isset($_SESSION['usuario'])) {
-                echo 'index.php';
-              } else {
-                $rol = strtolower($_SESSION['rol']);
-                echo "{$rol}_dashboard.php";
-              }
-            ?>"class="btn btn-danger ms-2">Salir
-          </a>
-
         </form>
       </div>
     </div>
