@@ -1,7 +1,7 @@
 
 <?php
     //Declaramos la función
-    function menu_empleado(){   
+    function menu_proveedor(){   
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
@@ -16,10 +16,10 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link" href="login_cliente.php">Inicio</a></li>
         <li class="nav-item"><a class="nav-link" href="login_cliente.php">Registro General</a></li>
-        <li class="nav-item"><a class="nav-link" href="empleado_report.php">Reporte Cliente & Mascotas</a></li>
+        <!--<li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Administrador</a></li>
         <li class="nav-item"><a class="nav-link" href="empleado_dashboard.php">Empleado</a></li>
-        <li class="nav-item"><a class="nav-link" href="cliente_dashboard.php">Cliente</a></li>
-        <!--<li class="nav-item"><a class="nav-link" href="proveedor_dashboard.php">Proveedor</a></li>-->
+        <li class="nav-item"><a class="nav-link" href="cliente_dashboard.php">Cliente</a></li>-->
+        <li class="nav-item"><a class="nav-link" href="proveedor_dashboard.php">Proveedor</a></li>
       </ul>
       <?php if (isset($_SESSION['cliente'])): ?>
         <span class="navbar-text text-light me-3">
