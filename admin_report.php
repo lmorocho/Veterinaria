@@ -61,7 +61,7 @@ $mascotas = $conexion->query("SELECT * FROM Mascota")->fetch_all(MYSQLI_ASSOC);
       <div class="col-md-4">
         <label class="form-label">Filtrar por Rol</label>
         <select name="rol" class="form-select" onchange="this.form.submit()">
-          <option value="">Todos</option>
+          <option value="">Ninguno</option>
           <?php foreach ($roles as $rol): ?>
             <option value="<?= $rol['ID_Rol'] ?>" <?= $filtroRol == $rol['ID_Rol'] ? 'selected' : '' ?>>
               <?= $rol['Nombre_Rol'] ?>

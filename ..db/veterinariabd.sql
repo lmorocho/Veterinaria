@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-05-2025 a las 20:10:32
+-- Tiempo de generación: 02-06-2025 a las 17:00:13
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -44,7 +44,8 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`ID_Cliente`, `Nombre`, `Apellido`, `DNI`, `Telefono`, `Email`, `Direccion`, `Fecha_Nacimiento`, `ID_Usuario`) VALUES
-(2, 'Test_cliente', 'Cliente', '12255688', '1578946538', 'cliente@cliente.com', 'Ayacucho 449', '2010-02-01', 8);
+(2, 'Test_cliente', 'Cliente', '12255688', '1578946538', 'cliente@cliente.com', 'Ayacucho 449', '2010-02-01', 8),
+(4, 'Test_cliente-2', 'Cliente2', '0916729482', '01578946538', 'cliente2@cliente2.com', 'Ayacucho 449', '1984-02-20', 10);
 
 -- --------------------------------------------------------
 
@@ -99,6 +100,7 @@ INSERT INTO `empleado` (`ID_Empleado`, `Nombre`, `Apellido`, `DNI`, `Fecha_Nacim
 (2, 'Mariano País', 'Garay', '29567456', '1980-11-25', 'mpgaray@gmail.com', '1133445566', 2, NULL),
 (3, 'Ariel', 'Toneguzzi', '28456123', '1970-03-14', 'atoneguzzi@gmail.com', '1144556677', 3, NULL),
 (4, 'Agustín', 'Arufe', '27894561', '1990-09-09', 'aarufe@gmail.com', '1155667788', 4, NULL),
+(5, 'admin', 'admin_append', '13579135', '0000-00-00', 'admin@admin.com', '', 9, ''),
 (9, 'Test_empleado', 'Empleado', '12345678', '2025-05-01', 'empleado@empleado.com', '43534775456', 7, 'Ayacucho 447');
 
 -- --------------------------------------------------------
@@ -156,6 +158,13 @@ CREATE TABLE `mascota` (
   `ID_Raza` int(11) NOT NULL,
   `ID_Cliente` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `mascota`
+--
+
+INSERT INTO `mascota` (`ID_Mascota`, `Nombre`, `Fecha_Nacimiento`, `ID_Raza`, `ID_Cliente`) VALUES
+(5, 'pippo', '2022-01-02', 3, 4);
 
 -- --------------------------------------------------------
 
@@ -306,6 +315,33 @@ CREATE TABLE `turno` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `usuario`
+--
+
+CREATE TABLE `usuario` (
+  `ID_Usuario` int(11) NOT NULL,
+  `Nombre_Usuario` varchar(50) NOT NULL,
+  `Password` varchar(255) NOT NULL,
+  `ID_Rol` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`ID_Usuario`, `Nombre_Usuario`, `Password`, `ID_Rol`) VALUES
+(1, 'lmorocho', '123', 1),
+(2, 'mpgaray', '123', 1),
+(3, 'atoneguzzi', '123', 1),
+(4, 'aarufe', '123', 1),
+(7, 'templeado', '123', 2),
+(8, 'tcliente', '123', 3),
+(9, 'admin', '123', 1),
+(10, 't2cliente', '123', 3);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `venta`
 --
 
@@ -440,6 +476,14 @@ ALTER TABLE `turno`
   ADD PRIMARY KEY (`ID_Turno`);
 
 --
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`ID_Usuario`),
+  ADD UNIQUE KEY `Nombre_Usuario` (`Nombre_Usuario`),
+  ADD KEY `ID_Rol` (`ID_Rol`);
+
+--
 -- Indices de la tabla `venta`
 --
 ALTER TABLE `venta`
@@ -453,7 +497,7 @@ ALTER TABLE `venta`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `ID_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_compra`
@@ -495,7 +539,7 @@ ALTER TABLE `especie`
 -- AUTO_INCREMENT de la tabla `mascota`
 --
 ALTER TABLE `mascota`
-  MODIFY `ID_Mascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID_Mascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `precio`
@@ -552,6 +596,12 @@ ALTER TABLE `turno`
   MODIFY `ID_Turno` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `ID_Usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
@@ -598,6 +648,12 @@ ALTER TABLE `proveedor`
 --
 ALTER TABLE `raza`
   ADD CONSTRAINT `raza_ibfk_1` FOREIGN KEY (`ID_Especie`) REFERENCES `especie` (`ID_Especie`);
+
+--
+-- Filtros para la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`ID_Rol`) REFERENCES `rol_usuario` (`ID_Rol`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -27,9 +27,9 @@ function menu_admin() {
         <li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Inicio</a></li>
         <li class="nav-item"><a class="nav-link" href="admin_registro.php">Registro General</a></li>
         <li class="nav-item"><a class="nav-link" href="admin_report.php">Reporte Cliente & Mascotas</a></li>
-        <li class="nav-item"><a class="nav-link" href="empleado_dashboard.php">Empleado</a></li>
+        <!--<li class="nav-item"><a class="nav-link" href="empleado_dashboard.php">Empleado</a></li>
         <li class="nav-item"><a class="nav-link" href="cliente_dashboard.php">Cliente</a></li>
-        <li class="nav-item"><a class="nav-link" href="proveedor_dashboard.php">Proveedor</a></li>
+        <li class="nav-item"><a class="nav-link" href="proveedor_dashboard.php">Proveedor</a></li>-->
       </ul>
 
       <span class="navbar-text text-light me-3">

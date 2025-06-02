@@ -15,8 +15,8 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link" href="index.php">Inicio</a></li>
-        <li class="nav-item"><a class="nav-link" href="cliente_mascota.php">Registro General</a></li>
-        <!--<li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Administrador</a></li>
+        <!--<li class="nav-item"><a class="nav-link" href="cliente_mascota.php">Registro General</a></li>
+        <li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Administrador</a></li>
         <li class="nav-item"><a class="nav-link" href="empleado_dashboard.php">Empleado</a></li>
         <li class="nav-item"><a class="nav-link" href="cliente_dashboard.php">Cliente</a></li>
         <li class="nav-item"><a class="nav-link" href="proveedor_dashboard.php">Proveedor</a></li>-->
