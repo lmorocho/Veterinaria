@@ -17,7 +17,7 @@ $usuario = $_SESSION['usuario']['Nombre_Usuario'] ?? 'Administrador';
 
   <?php menu_admin(); ?>
 
-  <div class="alert alert-warning text-center fst-italic mt-0" role="alert">
+  <div class="alert alert-warning text-center fst-italic mt-0" role="alert"><!--Color cambiado a warning-->
     <h4>Bienvenido <?= htmlspecialchars($usuario); ?> al Panel de Administración del Sistema de Veterinaria.</h4>
   </div>
 

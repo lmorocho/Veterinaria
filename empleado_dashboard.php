@@ -17,7 +17,7 @@ $usuario = $_SESSION['usuario']['Nombre_Usuario'] ?? 'Empleado';
 
   <?php menu_empleado(); ?>
 
-  <div class="alert alert-info text-center fst-italic mt-0" role="alert">
+  <div class="alert alert-info text-center fst-italic mt-0" role="alert"><!--Color cambiado a info-->
     <h4>Bienvenido <?= htmlspecialchars($usuario); ?> al Panel de Empleado del Sistema de Veterinaria.</h4>
   </div>
 

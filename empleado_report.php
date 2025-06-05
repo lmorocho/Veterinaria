@@ -39,7 +39,7 @@ while ($fila = $consultaMascotas->fetch_assoc()) {
 </head>
 <body>
   <?php menu_empleado(); ?>
-  <div class="alert alert-warning text-center fst-italic" role="alert">
+  <div class="alert alert-info text-center fst-italic" role="alert"><!--Color cambiado a info-->
     <h4>Bienvenido <?= htmlspecialchars($usuario); ?> al Panel de Reporte de Clientes.</h4>
   </div>
   <div class="container mt-4">
