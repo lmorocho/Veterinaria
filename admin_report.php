@@ -96,7 +96,7 @@ $mascotas = $conexion->query("SELECT * FROM Mascota")->fetch_all(MYSQLI_ASSOC);
       <div class="alert alert-warning">No hay registros para el rol seleccionado.</div>
     <?php endif; ?>
 
-    <h4 class="mt-5">Total de Mascotas Registradas: <?= count($mascotas) ?></h4>
+    <!--<h4 class="mt-5">Total de Mascotas Registradas: <?/*= count($mascotas) */?></h4>-->
   </div>
   <script src="js/bootstrap.bundle.min.js"></script>
 </body>
