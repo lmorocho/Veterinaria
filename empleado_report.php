@@ -36,6 +36,7 @@ while ($fila = $consultaMascotas->fetch_assoc()) {
   <meta charset="UTF-8">
   <title>Reporte de Clientes</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script>function imprimirReporte() { window.print(); }</script>
 </head>
 <body>
   <?php menu_empleado(); ?>
@@ -45,6 +46,10 @@ while ($fila = $consultaMascotas->fetch_assoc()) {
   <div class="container mt-4">
 
     <h2 class="mb-4">Clientes Registrados</h2>
+
+    <div class="mb-3">
+      <a href="#" onclick="imprimirReporte()" class="btn btn-outline-secondary">🖨️ Imprimir / Exportar PDF</a>
+    </div>
 
     <?php if ($clientes): ?>
       <div class="table-responsive">

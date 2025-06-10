@@ -47,6 +47,7 @@ $mascotas = $conexion->query("SELECT * FROM Mascota")->fetch_all(MYSQLI_ASSOC);
   <meta charset="UTF-8">
   <title>Reporte General por Rol</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script>function imprimirReporte() { window.print(); }</script>
 </head>
 <body>
   <?php menu_admin(); ?>
@@ -56,6 +57,10 @@ $mascotas = $conexion->query("SELECT * FROM Mascota")->fetch_all(MYSQLI_ASSOC);
   <div class="container mt-4">
     
     <h2 class="mb-4">Reporte General</h2>
+
+    <div class="mb-3">
+      <a href="#" onclick="imprimirReporte()" class="btn btn-outline-secondary">🖨️ Imprimir / Exportar PDF</a>
+    </div>
 
     <form method="get" class="row g-3 mb-4">
       <div class="col-md-4">

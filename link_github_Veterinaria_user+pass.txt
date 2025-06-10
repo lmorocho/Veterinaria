@@ -1,0 +1,6 @@
+https://github.com/lmorocho/Veterinaria.git
+
+index.php
+
+user: admin
+pass: 123

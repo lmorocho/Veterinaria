@@ -20,7 +20,7 @@ function menu_cliente() {
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
           <li class="nav-item"><a class="nav-link" href="cliente_dashboard.php">Inicio</a></li>
-          <li class="nav-item"><a class="nav-link" href="cliente_mascota.php">Registrar Mascotas</a></li>
+          <li class="nav-item"><a class="nav-link" href="cliente_registro.php">Registrar Mascotas</a></li>
           <li class="nav-item"><a class="nav-link" href="cliente_mascota_report.php">Mis Mascotas</a></li>
         </ul>
 
