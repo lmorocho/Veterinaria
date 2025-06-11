@@ -19,7 +19,9 @@ $razas    = $conexion->query("SELECT * FROM Raza")->fetch_all(MYSQLI_ASSOC);
 </head>
 <body>
   <?php menu_empleado(); ?>
-
+  <div class="alert alert-info text-center fst-italic" role="alert">
+    <h4>Bienvenido <?= htmlspecialchars($usuario); ?> al Panel de Empleado del Sistema de Veterinaria.</h4>
+  </div>
   <div class="container mt-5">
     <!-- Mostrar mensajes de sesión -->
     <?php if (isset($_SESSION['modal_exito'])): ?>
