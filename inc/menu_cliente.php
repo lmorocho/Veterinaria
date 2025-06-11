@@ -1,10 +1,22 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
+/*if (session_status() === PHP_SESSION_NONE) {
   session_start();
-}
+}*/
 
 function menu_cliente() {
-  $usuario = $_SESSION['usuario']['Nombre'] ?? 'Invitado';
+  /*$usuario = $_SESSION['usuario']['Nombre'] ?? 'Invitado';*/
+  //verificar si la sesión está iniciada y el usuario es cliente
+  if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+  }
+
+  if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['ID_Rol'] != 3) {
+    header("Location: login_cliente.php");
+    exit;
+  }
+
+  $nombreUsuario = $_SESSION['usuario']['Nombre_Usuario'] ?? 'Cliente';
+
   ?>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -26,7 +38,7 @@ function menu_cliente() {
 
         <ul class="navbar-nav ms-auto">
           <li class="nav-item text-light nav-link">
-            Usuario: <strong><?= htmlspecialchars($usuario) ?></strong>
+            Usuario: <strong><?= htmlspecialchars($nombreUsuario) ?></strong>
           </li>
           <li class="nav-item">
             <a class="btn btn-outline-light ms-2" href="logout.php">Cerrar sesión</a>

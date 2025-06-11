@@ -25,10 +25,28 @@ $roles = $roles_result->fetch_all(MYSQLI_ASSOC);
 <body>
     <?php menu_admin(); ?>
     <div class="alert alert-warning text-center fst-italic" role="alert">
-        <h4>Bienvenido <?= htmlspecialchars($_SESSION['usuario']['Nombre_Usuario'] ?? 'Administrador'); ?> al Panel de Administración del Sistema de Veterinaria.</h4>
+        <h4>Bienvenido <?= htmlspecialchars($usuario); ?> al Panel de Administración del Sistema de Veterinaria.</h4>
     </div>
     <div class="container mt-5">
         <h2 class="text-center mb-4">Registro de Usuario - Panel Administrador</h2>
+
+        <?php if (isset($_SESSION['modal_exito'])): ?>
+        <div class="modal fade show" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" style="display:block; background: rgba(0,0,0,0.5);">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header bg-dark text-white">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Registro exitoso</h1>
+              </div>
+              <div class="modal-body">
+                <?= $_SESSION['modal_exito']; unset($_SESSION['modal_exito']); ?>
+              </div>
+              <div class="modal-footer">
+                <a href="admin_registro.php" class="btn btn-primary">Registrar otro</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <?php endif; ?>
 
         <form action="admin_guardar_registro.php" method="post">
             <div class="row">

@@ -1,22 +1,19 @@
 <?php
-require("inc/auth_cliente.php");
-require("conexion.php");
-require("inc/menu_cliente.php");
+    require("inc/auth_cliente.php");
+    require("conexion.php");
+    require("inc/menu_cliente.php");
 
-$usuario = $_SESSION['usuario']['Nombre_Usuario'] ?? 'Cliente';
-$id_cliente = $_SESSION['usuario']['ID_Cliente'] ?? null;
+    $usuario = $_SESSION['usuario']['Nombre_Usuario'] ?? 'Cliente';
+    $id_cliente = $_SESSION['usuario']['ID_Cliente'] ?? null;
 
-$especies = $conexion->query("SELECT * FROM Especie")->fetch_all(MYSQLI_ASSOC);
-$razas = $conexion->query("SELECT * FROM Raza")->fetch_all(MYSQLI_ASSOC);
-
-$mensaje_modal = $_SESSION['modal_exito'] ?? null;
-unset($_SESSION['modal_exito']);
+    $especies = $conexion->query("SELECT * FROM Especie")->fetch_all(MYSQLI_ASSOC);
+    $razas = $conexion->query("SELECT * FROM Raza")->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Registro de Mascotas</title>
+  <title>Registrar Mascotas</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -24,10 +21,12 @@ unset($_SESSION['modal_exito']);
   <div class="alert alert-secondary text-center fst-italic mt-0" role="alert">
     <h4>Bienvenido <?= htmlspecialchars($usuario); ?> al Panel de Registro de Mascotas.</h4>
   </div>
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Registrar Nueva Mascota</h2>
 
-  <div class="container mt-4">
-    <h2 class="text-center mb-4">Registrar Mascotas</h2>
     <form action="cliente_guardar_registro.php" method="post">
+      <input type="hidden" name="id_cliente" value="<?= $id_cliente ?>">
+
       <div class="mb-3">
         <label>¿Cuántas mascotas desea registrar?</label>
         <select name="cantidad_mascotas" id="cantidad_mascotas" class="form-select" onchange="generarCamposMascotas()" required>
@@ -38,50 +37,29 @@ unset($_SESSION['modal_exito']);
         </select>
       </div>
 
-      <div id="mascotas-container" class="mt-3"></div>
+      <div id="mascotas-container" class="mt-4"></div>
 
       <div class="text-end">
-        <button type="submit" class="btn btn-primary">Guardar Mascotas</button>
+        <button type="submit" class="btn btn-primary">Guardar Mascota(s)</button>
         <a href="cliente_dashboard.php" class="btn btn-secondary">Cancelar</a>
       </div>
     </form>
   </div>
 
-  <!-- Modal estático Bootstrap -->
-  <?php if ($mensaje_modal): ?>
-  <div class="modal fade show" id="modalExito" tabindex="-1" style="display: block;" aria-modal="true" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header bg-dark text-white">
-          <h5 class="modal-title">Registro Exitoso</h5>
-          <button type="button" class="btn-close" onclick="cerrarModal()"></button>
-        </div>
-        <div class="modal-body">
-          <?= htmlspecialchars($mensaje_modal); ?>
-        </div>
-        <div class="modal-footer">
-          <a href="cliente_registro.php" class="btn btn-primary">Aceptar</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal-backdrop fade show"></div>
-  <?php endif; ?>
-
   <script>
-    const especies = <?= json_encode($especies) ?>;
-    const razas = <?= json_encode($razas) ?>;
+    const especies = <?= json_encode($especies); ?>;
+    const razas = <?= json_encode($razas); ?>;
 
     function generarCamposMascotas() {
       const cantidad = document.getElementById('cantidad_mascotas').value;
       const contenedor = document.getElementById('mascotas-container');
       contenedor.innerHTML = '';
       for (let i = 0; i < cantidad; i++) {
+        const div = document.createElement('div');
+        div.className = 'mb-3 p-3 border rounded';
         let especieOptions = '<option value="">Seleccione especie</option>';
         especies.forEach(e => especieOptions += `<option value="${e.ID_Especie}">${e.Nombre_Especie}</option>`);
 
-        const div = document.createElement('div');
-        div.className = 'mb-3 p-3 border rounded';
         div.innerHTML = `
           <h5>Mascota #${i + 1}</h5>
           <label>Nombre</label>
@@ -112,12 +90,6 @@ unset($_SESSION['modal_exito']);
         }
       });
       razaSelect.disabled = razaSelect.options.length === 0;
-    }
-
-    function cerrarModal() {
-      const modal = document.getElementById('modalExito');
-      modal.style.display = 'none';
-      document.querySelector('.modal-backdrop').remove();
     }
   </script>
   <script src="js/bootstrap.bundle.min.js"></script>

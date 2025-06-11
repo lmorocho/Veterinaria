@@ -26,10 +26,23 @@ function menu_admin() {
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Inicio</a></li>
         <li class="nav-item"><a class="nav-link" href="admin_registro.php">Registro General</a></li>
-        <li class="nav-item"><a class="nav-link" href="admin_report.php">Reporte Cliente & Mascotas</a></li>
+        <!--<li class="nav-item"><a class="nav-link" href="admin_report.php">Reporte Cliente & Mascotas</a></li>-->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="registroDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Reportes
+          </a>
+          <!--<ul class="dropdown-menu" aria-labelledby="registroDropdown">-->
+          <ul class="dropdown-menu dropdown-menu-dark bg-dark" aria-labelledby="registroDropdown">
+            <li><a class="dropdown-item" href="admin_report.php">Reporte Usuarios</a></li>
+            <li><a class="dropdown-item" href="admin_report_mascotas.php">Reporte Mascotas</a></li>
+          </ul>
+        </li>
         <!--<li class="nav-item"><a class="nav-link" href="empleado_dashboard.php">Empleado</a></li>
         <li class="nav-item"><a class="nav-link" href="cliente_dashboard.php">Cliente</a></li>
         <li class="nav-item"><a class="nav-link" href="proveedor_dashboard.php">Proveedor</a></li>-->
+        <li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Gestión de Turnos</a></li>
+        <li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Agenda</a></li>
+        <li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Historial Médico</a></li>
       </ul>
 
       <span class="navbar-text text-light me-3">

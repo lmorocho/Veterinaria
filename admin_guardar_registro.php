@@ -9,16 +9,16 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'Administrador') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre = $_POST['nombre'] ?? '';
-    $apellido = $_POST['apellido'] ?? '';
-    $dni = $_POST['dni'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $telefono = $_POST['telefono'] ?? '';
-    $direccion = $_POST['direccion'] ?? '';
-    $fecha_nacimiento = $_POST['fecha_nacimiento'] ?? '';
-    $usuario = $_POST['usuario'] ?? '';
-    $password = $_POST['password'] ?? '';
-    $id_rol = $_POST['id_rol'] ?? '';
+    $nombre             = $_POST['nombre']             ?? '';
+    $apellido           = $_POST['apellido']           ?? '';
+    $dni                = $_POST['dni']                ?? '';
+    $email              = $_POST['email']              ?? '';
+    $telefono           = $_POST['telefono']           ?? '';
+    $direccion          = $_POST['direccion']          ?? '';
+    $fecha_nacimiento   = $_POST['fecha_nacimiento']   ?? '';
+    $usuario            = $_POST['usuario']            ?? '';
+    $password           = $_POST['password']           ?? '';
+    $id_rol             = intval($_POST['id_rol']      ?? 0);
 
     // Validar campos obligatorios
     if (!$nombre || !$apellido || !$dni || !$email || !$usuario || !$password || !$id_rol) {
@@ -27,46 +27,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Verificar que el nombre de usuario no exista
-    $checkUsuario = $conexion->prepare("SELECT * FROM Usuario WHERE Nombre_Usuario = ?");
+    // Verificar nombre de usuario único
+    $checkUsuario = $conexion->prepare("SELECT 1 FROM Usuario WHERE Nombre_Usuario = ?");
     $checkUsuario->bind_param("s", $usuario);
     $checkUsuario->execute();
     $resUsuario = $checkUsuario->get_result();
-
     if ($resUsuario->num_rows > 0) {
         $_SESSION['modal_error'] = "El nombre de usuario ya existe.";
         header("Location: admin_registro.php");
         exit;
     }
 
-    // Guardar contraseña en texto plano (inseguro)
-    $stmtUsuario = $conexion->prepare(
+    // Insertar en Usuario (texto plano, solo desarrollo)
+    $stmtUser = $conexion->prepare(
         "INSERT INTO Usuario (Nombre_Usuario, Password, ID_Rol) VALUES (?, ?, ?)"
     );
-    $stmtUsuario->bind_param("ssi", $usuario, $password, $id_rol);
-    $stmtUsuario->execute();
-    $id_usuario = $stmtUsuario->insert_id;
+    $stmtUser->bind_param("ssi", $usuario, $password, $id_rol);
+    $stmtUser->execute();
+    $id_usuario = $stmtUser->insert_id;
 
-    // Insertar datos adicionales según el rol
+    // Insertar datos según rol
     switch ($id_rol) {
-        case 1:
+        case 1: // Administrador -> Empleado
+        case 2: // Empleado
             $stmt = $conexion->prepare(
-                "INSERT INTO Administrador (ID_Usuario, Nombre, Apellido, DNI, Email, Telefono, Direccion, Fecha_Nacimiento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+                "INSERT INTO Empleado (ID_Usuario, Nombre, Apellido, DNI, Email, Telefono, Direccion, Fecha_Nacimiento)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
             );
             break;
-        case 2:
+        case 3: // Cliente
             $stmt = $conexion->prepare(
-                "INSERT INTO Empleado (ID_Usuario, Nombre, Apellido, DNI, Email, Telefono, Direccion, Fecha_Nacimiento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+                "INSERT INTO Cliente  (ID_Usuario, Nombre, Apellido, DNI, Email, Telefono, Direccion, Fecha_Nacimiento)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
             );
             break;
-        case 3:
+        case 4: // Proveedor
             $stmt = $conexion->prepare(
-                "INSERT INTO Cliente (ID_Usuario, Nombre, Apellido, DNI, Email, Telefono, Direccion, Fecha_Nacimiento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-            );
-            break;
-        case 4:
-            $stmt = $conexion->prepare(
-                "INSERT INTO Proveedor (ID_Usuario, Nombre, Apellido, DNI, Email, Telefono, Direccion, Fecha_Nacimiento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+                "INSERT INTO Proveedor (ID_Usuario, Nombre, Apellido, DNI, Email, Telefono, Direccion, Fecha_Nacimiento)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
             );
             break;
         default:
@@ -74,7 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: admin_registro.php");
             exit;
     }
-
     $stmt->bind_param(
         "isssssss",
         $id_usuario,
@@ -86,13 +83,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $direccion,
         $fecha_nacimiento
     );
+    $stmt->execute();
 
-    if ($stmt->execute()) {
-        $_SESSION['modal_exito'] = "Usuario registrado correctamente.";
-    } else {
-        $_SESSION['modal_error'] = "Error al registrar el usuario.";
+    // Si es Cliente, registrar mascotas
+    if ($id_rol === 3 && !empty($_POST['mascotas']) && is_array($_POST['mascotas'])) {
+        $id_cliente = $stmt->insert_id;
+        $stmtMasc = $conexion->prepare(
+            "INSERT INTO Mascota (ID_Cliente, Nombre, Fecha_Nacimiento, ID_Raza) VALUES (?, ?, ?, ?)"
+        );
+        foreach ($_POST['mascotas'] as $m) {
+            $nomM  = trim($m['nombre'] ?? '');
+            $fecM  = trim($m['fecha_nacimiento'] ?? '');
+            $razaM = intval($m['id_raza'] ?? 0);
+            if ($nomM && $fecM && $razaM > 0) {
+                $stmtMasc->bind_param("issi", $id_cliente, $nomM, $fecM, $razaM);
+                $stmtMasc->execute();
+            }
+        }
     }
 
+    // Mensaje de éxito y redirección
+    $_SESSION['modal_exito'] = "Usuario registrado correctamente.";
     header("Location: admin_registro.php");
     exit;
 } else {
