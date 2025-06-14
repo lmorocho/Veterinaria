@@ -3,6 +3,13 @@
     function carrusels(){   
 ?>
 
+    <style>
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+        filter: brightness(0.3);
+        }
+    </style>
+
     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">

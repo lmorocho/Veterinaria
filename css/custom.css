@@ -1,0 +1,37 @@
+/* css/custom.css */
+#offcanvasScrolling.offcanvas-start {
+  background-image: url('inc/paws_background.png');
+  background-position: center center;
+  background-repeat: repeat-x;    /* repite en el eje X */
+  background-size: auto;          /* NO “cover”, para que no escale a pantalla completa */
+  /* width y height los controla Bootstrap por defecto */
+}
+  
+
+  .mapa-veterinaria iframe {
+    border-radius: 0 0.5rem 0.5rem 0;
+    width: 100%;
+    height: 380px;
+  }
+  .imagen-veterinaria img {
+    border-radius: 0.5rem 0 0 0.5rem;
+    object-fit: cover;
+    width: 100%;
+    height: 380px;
+  }
+
+  /* Aplicams al carrusel un fondo */
+#carouselExampleAutoplaying {
+  position: relative;          /* para posibles overlays */
+  background-image: url('inc/paws_background.png');
+  background-position: center;
+  background-size: cover;      /* escala para cubrir todo el área */
+  background-repeat: no-repeat;
+}
+
+/* Oscurecer las flechas del carousel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: brightness(0.3); /* 0 = negro puro, 1 = original */
+}
+

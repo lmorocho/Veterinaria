@@ -1,5 +1,5 @@
-
 <?php
+// auth_empleado.php inicia la sesión y valida al empleado
 require("inc/auth_empleado.php");
 require("conexion.php");
 require("inc/menu_empleado.php");
@@ -8,7 +8,7 @@ $usuario = $_SESSION['usuario']['Nombre_Usuario'] ?? 'Empleado';
 
 // Consulta de especies y razas
 $especies = $conexion->query("SELECT * FROM Especie")->fetch_all(MYSQLI_ASSOC);
-$razas = $conexion->query("SELECT * FROM Raza")->fetch_all(MYSQLI_ASSOC);
+$razas    = $conexion->query("SELECT * FROM Raza")->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -19,12 +19,25 @@ $razas = $conexion->query("SELECT * FROM Raza")->fetch_all(MYSQLI_ASSOC);
 </head>
 <body>
   <?php menu_empleado(); ?>
-  <div class="alert alert-info text-center fst-italic mt-0" role="alert"><!--Color cambiado a info-->
-    <h4>Bienvenido <?= htmlspecialchars($usuario); ?> al Panel del Empleado.</h4>
+  <div class="alert alert-info text-center fst-italic" role="alert">
+    <h4>Bienvenido <?= htmlspecialchars($usuario); ?> al Panel de Empleado del Sistema de Veterinaria.</h4>
   </div>
   <div class="container mt-5">
-    <h2 class="text-center mb-4">Registro de Cliente y Mascotas</h2>
+    <!-- Mostrar mensajes de sesión -->
+    <?php if (isset($_SESSION['modal_exito'])): ?>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <?= htmlspecialchars($_SESSION['modal_exito']); unset($_SESSION['modal_exito']); ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+      </div>
+    <?php endif; ?>
+    <?php if (isset($_SESSION['modal_error'])): ?>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <?= htmlspecialchars($_SESSION['modal_error']); unset($_SESSION['modal_error']); ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+      </div>
+    <?php endif; ?>
 
+    <h2 class="text-center mb-4">Registro de Cliente y Mascotas</h2>
     <form action="empleado_guardar_registro.php" method="post">
       <input type="hidden" name="id_rol" value="3">
 
@@ -91,10 +104,10 @@ $razas = $conexion->query("SELECT * FROM Raza")->fetch_all(MYSQLI_ASSOC);
 
   <script>
     const especies = <?php echo json_encode($especies); ?>;
-    const razas = <?php echo json_encode($razas); ?>;
+    const razas    = <?php echo json_encode($razas); ?>;
 
     function generarCamposMascotas() {
-      const cantidad = document.getElementById('cantidad_mascotas').value;
+      const cantidad   = document.getElementById('cantidad_mascotas').value;
       const contenedor = document.getElementById('mascotas-container');
       contenedor.innerHTML = '';
       for (let i = 0; i < cantidad; i++) {
