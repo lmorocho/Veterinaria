@@ -94,7 +94,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   ?>
 </head>
 <body>
-<?php menu(); ?>
+<?php menu();
+      chatbot();    
+?>
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">

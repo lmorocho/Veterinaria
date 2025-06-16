@@ -85,11 +85,8 @@
         </div>
     </div>
 
-    
-
     <!-- Banner1 Veterinaria -->
     <?php bannerpet1(); ?>
-
 
     <!-- Dashboard Veterinaria con estadística de los clientes y mascotas -->
     <?php dashboard(); ?>
@@ -102,7 +99,6 @@
         <p>Contamos con un equipo de profesionales apasionados por los animales, listos para brindarte la mejor atención y asesoramiento. ¡Tu mascota merece lo mejor!</p>
         <p>Visítanos en nuestra sucursal en Entre Ríos 1234, CABA, o contáctanos al (011) 1234-5678. Estamos aquí para ayudarte a cuidar de tu mejor amigo.</p>
     </div>
-
 
     <!-- Imagen y mapa Google Maps -->
     <div class="container my-5">
@@ -125,7 +121,6 @@
         </div>
       </div>
     </div>
-
 
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>

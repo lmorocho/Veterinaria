@@ -2,79 +2,112 @@
 session_start();
 include("conexion.php");
 
+// Verificar sesión y rol de Administrador
 if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'Administrador') {
-  header("Location: login_cliente.php");
-  exit;
+    header("Location: login_cliente.php");
+    exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $nombre = $_POST['nombre'] ?? '';
-  $apellido = $_POST['apellido'] ?? '';
-  $dni = $_POST['dni'] ?? '';
-  $email = $_POST['email'] ?? '';
-  $telefono = $_POST['telefono'] ?? '';
-  $direccion = $_POST['direccion'] ?? '';
-  $fecha_nacimiento = $_POST['fecha_nacimiento'] ?? '';
-  $usuario = $_POST['usuario'] ?? '';
-  $password = $_POST['password'] ?? '';
-  $id_rol = $_POST['id_rol'] ?? '';
+    $nombre             = $_POST['nombre']             ?? '';
+    $apellido           = $_POST['apellido']           ?? '';
+    $dni                = $_POST['dni']                ?? '';
+    $email              = $_POST['email']              ?? '';
+    $telefono           = $_POST['telefono']           ?? '';
+    $direccion          = $_POST['direccion']          ?? '';
+    $fecha_nacimiento   = $_POST['fecha_nacimiento']   ?? '';
+    $usuario            = $_POST['usuario']            ?? '';
+    $password           = $_POST['password']           ?? '';
+    $id_rol             = intval($_POST['id_rol']      ?? 0);
 
-  if (!$nombre || !$apellido || !$dni || !$email || !$usuario || !$password || !$id_rol) {
-    die("<div class='alert alert-danger'>Faltan datos obligatorios. <a href='admin_registro.php'>Volver</a></div>");
-  }
+    // Validar campos obligatorios
+    if (!$nombre || !$apellido || !$dni || !$email || !$usuario || !$password || !$id_rol) {
+        $_SESSION['modal_error'] = "Faltan datos obligatorios.";
+        header("Location: admin_registro.php");
+        exit;
+    }
 
-  // Verifica si ya existe el usuario
-  $checkUsuario = $conexion->prepare("SELECT * FROM Usuario WHERE Nombre_Usuario = ?");
-  $checkUsuario->bind_param("s", $usuario);
-  $checkUsuario->execute();
-  $resUsuario = $checkUsuario->get_result();
+    // Verificar nombre de usuario único
+    $checkUsuario = $conexion->prepare("SELECT 1 FROM Usuario WHERE Nombre_Usuario = ?");
+    $checkUsuario->bind_param("s", $usuario);
+    $checkUsuario->execute();
+    $resUsuario = $checkUsuario->get_result();
+    if ($resUsuario->num_rows > 0) {
+        $_SESSION['modal_error'] = "El nombre de usuario ya existe.";
+        header("Location: admin_registro.php");
+        exit;
+    }
 
-  if ($resUsuario->num_rows > 0) {
-    die("<div class='alert alert-danger'>El nombre de usuario ya existe. <a href='admin_registro.php'>Volver</a></div>");
-  }
+    // Insertar en Usuario (texto plano, solo desarrollo)
+    $stmtUser = $conexion->prepare(
+        "INSERT INTO Usuario (Nombre_Usuario, Password, ID_Rol) VALUES (?, ?, ?)"
+    );
+    $stmtUser->bind_param("ssi", $usuario, $password, $id_rol);
+    $stmtUser->execute();
+    $id_usuario = $stmtUser->insert_id;
 
-  // Inserta en tabla Usuario
-  $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-  $stmtUsuario = $conexion->prepare("INSERT INTO Usuario (Nombre_Usuario, Password, ID_Rol) VALUES (?, ?, ?)");
-  $stmtUsuario->bind_param("ssi", $usuario, $hashedPassword, $id_rol);
-  $stmtUsuario->execute();
-  $id_usuario = $stmtUsuario->insert_id;
+    // Insertar datos según rol
+    switch ($id_rol) {
+        case 1: // Administrador -> Empleado
+        case 2: // Empleado
+            $stmt = $conexion->prepare(
+                "INSERT INTO Empleado (ID_Usuario, Nombre, Apellido, DNI, Email, Telefono, Direccion, Fecha_Nacimiento)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+            );
+            break;
+        case 3: // Cliente
+            $stmt = $conexion->prepare(
+                "INSERT INTO Cliente  (ID_Usuario, Nombre, Apellido, DNI, Email, Telefono, Direccion, Fecha_Nacimiento)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+            );
+            break;
+        case 4: // Proveedor
+            $stmt = $conexion->prepare(
+                "INSERT INTO Proveedor (ID_Usuario, Nombre, Apellido, DNI, Email, Telefono, Direccion, Fecha_Nacimiento)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+            );
+            break;
+        default:
+            $_SESSION['modal_error'] = "Rol no válido.";
+            header("Location: admin_registro.php");
+            exit;
+    }
+    $stmt->bind_param(
+        "isssssss",
+        $id_usuario,
+        $nombre,
+        $apellido,
+        $dni,
+        $email,
+        $telefono,
+        $direccion,
+        $fecha_nacimiento
+    );
+    $stmt->execute();
 
-  // Insertar en la tabla correspondiente
-  switch ($id_rol) {
-    case 1: // Administrador
-      $tabla = "Administrador";
-      $campos = "(ID_Usuario, Nombre, Apellido, DNI, Email, Telefono, Direccion, Fecha_Nacimiento)";
-      $valores = "(?, ?, ?, ?, ?, ?, ?, ?)";
-      $stmt = $conexion->prepare("INSERT INTO $tabla $campos VALUES $valores");
-      $stmt->bind_param("isssssss", $id_usuario, $nombre, $apellido, $dni, $email, $telefono, $direccion, $fecha_nacimiento);
-      break;
-    case 2: // Empleado
-      $tabla = "Empleado";
-      $stmt = $conexion->prepare("INSERT INTO Empleado (ID_Usuario, Nombre, Apellido, DNI, Email, Telefono, Direccion, Fecha_Nacimiento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-      $stmt->bind_param("isssssss", $id_usuario, $nombre, $apellido, $dni, $email, $telefono, $direccion, $fecha_nacimiento);
-      break;
-    case 3: // Cliente
-      $tabla = "Cliente";
-      $stmt = $conexion->prepare("INSERT INTO Cliente (ID_Usuario, Nombre, Apellido, DNI, Email, Telefono, Direccion, Fecha_Nacimiento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-      $stmt->bind_param("isssssss", $id_usuario, $nombre, $apellido, $dni, $email, $telefono, $direccion, $fecha_nacimiento);
-      break;
-    case 4: // Proveedor
-      $tabla = "Proveedor";
-      $stmt = $conexion->prepare("INSERT INTO Proveedor (ID_Usuario, Nombre, Apellido, DNI, Email, Telefono, Direccion, Fecha_Nacimiento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-      $stmt->bind_param("isssssss", $id_usuario, $nombre, $apellido, $dni, $email, $telefono, $direccion, $fecha_nacimiento);
-      break;
-    default:
-      die("<div class='alert alert-danger'>Rol no válido.</div>");
-  }
+    // Si es Cliente, registrar mascotas
+    if ($id_rol === 3 && !empty($_POST['mascotas']) && is_array($_POST['mascotas'])) {
+        $id_cliente = $stmt->insert_id;
+        $stmtMasc = $conexion->prepare(
+            "INSERT INTO Mascota (ID_Cliente, Nombre, Fecha_Nacimiento, ID_Raza) VALUES (?, ?, ?, ?)"
+        );
+        foreach ($_POST['mascotas'] as $m) {
+            $nomM  = trim($m['nombre'] ?? '');
+            $fecM  = trim($m['fecha_nacimiento'] ?? '');
+            $razaM = intval($m['id_raza'] ?? 0);
+            if ($nomM && $fecM && $razaM > 0) {
+                $stmtMasc->bind_param("issi", $id_cliente, $nomM, $fecM, $razaM);
+                $stmtMasc->execute();
+            }
+        }
+    }
 
-  if ($stmt->execute()) {
-    echo "<div class='alert alert-success'>Usuario registrado correctamente. <a href='admin_registro.php'>Registrar otro</a></div>";
-  } else {
-    echo "<div class='alert alert-danger'>Error al registrar el usuario. <a href='admin_registro.php'>Intentar nuevamente</a></div>";
-  }
+    // Mensaje de éxito y redirección
+    $_SESSION['modal_exito'] = "Usuario registrado correctamente.";
+    header("Location: admin_registro.php");
+    exit;
 } else {
-  header("Location: admin_registro.php");
-  exit;
+    header("Location: admin_registro.php");
+    exit;
 }
 ?>

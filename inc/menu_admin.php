@@ -40,8 +40,8 @@ function menu_admin() {
         <!--<li class="nav-item"><a class="nav-link" href="empleado_dashboard.php">Empleado</a></li>
         <li class="nav-item"><a class="nav-link" href="cliente_dashboard.php">Cliente</a></li>
         <li class="nav-item"><a class="nav-link" href="proveedor_dashboard.php">Proveedor</a></li>-->
-        <li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Gestión de Turnos</a></li>
-        <li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Agenda</a></li>
+        <li class="nav-item"><a class="nav-link" href="admin_turnos.php">Gestión de Turnos</a></li>
+        <li class="nav-item"><a class="nav-link" href="agenda_turno_clientes.php">Agenda</a></li>
         <li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Historial Médico</a></li>
       </ul>
 

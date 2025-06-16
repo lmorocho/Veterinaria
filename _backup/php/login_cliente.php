@@ -82,10 +82,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="UTF-8">
   <title>Login Cliente</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <?php require("inc/menu.php"); ?>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <!-- Font Awesome Free -->
+  <link   rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!--<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">-->
+  <link href="css/custom.css" rel="stylesheet">
+  <?php  
+    require("inc/chat_bot.php");
+    require("inc/menu.php"); 
+  ?>
 </head>
 <body>
-<?php menu(); ?>
+<?php menu();
+      chatbot();    
+?>
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
@@ -107,7 +118,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <input type="password" class="form-control" id="password" name="password" required>
             </div>
             <button type="submit" class="btn btn-primary">Ingresar</button>
-            <p class="mt-3 text-center">¿No tienes cuenta? <a href="cliente_mascota.php">Registrarse</a></p>
+            <!--<p class="mt-3 text-center">¿No tienes cuenta? <a href="cliente_mascota.php">Registrarse</a></p>-->
+            <p class="mt-3 text-center">¿No tienes cuenta? <a href="invitado.php">Registrarse</a></p>
           </form>
         </div>
       </div>

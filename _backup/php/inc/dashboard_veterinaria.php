@@ -1,147 +1,106 @@
 <?php
-    //Declaramos la función
-    function dashboard(){   
+//Declaramos la función
+//require("conexion.php");
+//require("inc/menu.php");
+// 1. Incluimos conexión.php
+require_once("conexion.php");
+
+function dashboard(){
+    global $conexion;
+    //require_once("conexion.php");
+
+    // 2. Ejecuta las consultas y guardamos los totales
+    // Total Clientes
+    $res = $conexion->query("SELECT COUNT(*) AS total FROM Cliente");
+    $totalClientes = $res->fetch_assoc()['total'] ?? 0;
+
+    // Total Mascotas
+    $res = $conexion->query("SELECT COUNT(*) AS total FROM Mascota");
+    $totalMascotas = $res->fetch_assoc()['total'] ?? 0;
+
+    // Total Perros
+    $res = $conexion->query("
+        SELECT COUNT(*) AS total 
+        FROM Mascota m
+        INNER JOIN Raza r ON m.ID_Raza = r.ID_Raza
+        INNER JOIN Especie e ON r.ID_Especie = e.ID_Especie
+        WHERE e.Nombre_Especie = 'Perro'
+    ");
+    $totalPerros = $res->fetch_assoc()['total'] ?? 0;
+
+    // Total Gatos
+    $res = $conexion->query("
+        SELECT COUNT(*) AS total 
+        FROM Mascota m
+        INNER JOIN Raza r ON m.ID_Raza = r.ID_Raza
+        INNER JOIN Especie e ON r.ID_Especie = e.ID_Especie
+        WHERE e.Nombre_Especie = 'Gato'
+    ");
+    $totalGatos = $res->fetch_assoc()['total'] ?? 0;
 ?>
-
-    <!--<div class="container">-->
-        <!--<h2>Dashboard</h2>-->
-        <div class="numbers">
-            <div class="text-bg-secondary p-3">
-                <br>
-                <!-- Titulo centrado de la seccion-->
-                <div class="row text-center">
-                    <div class="col-3">
-                        <div class="d-flex justify-content-center">
-                        <!--<h2>Dashboard</h2>-->
-                        <!--<div class="card text-bg-secondary mb-3" style="max-width: 18rem;">-->
-                            <div class="card text-bg-warning mb-3" style="width: 22rem;">
-                            <!--<div background-color: #ff6445 img src="img/paws.png">-->
-                                <div class="card-header"><h6>Total Clientes</h6></div>
-                                <div class="card-body">
-                                    <p class="card-text"><h2>120</h2></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="d-flex justify-content-center">
-                        <!--<div>Total Mascotas: <span id="total-mascotas">250</span></div>-->
-                            <div class="card text-bg-warning mb-3" style="width: 22rem;">
-                                <div class="card-header"><h6>Total Mascotas</h6></div>
-                                <div class="card-body">
-                                    <p class="card-text"><h2>250</h2></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="d-flex justify-content-center">
-                            <!--<div>Ventas del Mes: <span id="ventas-mes">$35,000</span></div>-->
-                            <div class="card text-bg-warning mb-3" style="width: 22rem;">
-                                <div class="card-header"><h6>Ventas del Mes</h6></div>
-                                <div class="card-body">
-                                    <p class="card-text"><h2>$35.000 ARS</h2></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="d-flex justify-content-center">
-                            <!--<div>Turnos Hoy: <span id="turnos-hoy">8</span></div>-->
-                            <div class="card text-bg-warning mb-3" style="width: 22rem;">
-                                <div class="card-header"><h6>Total de Turnos Hoy</h6></div>
-                                <div class="card-body">
-                                    <p class="card-text"><h2>8</h2></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="numbers">
+      <div class="text-bg-secondary p-3">
         <br>
-        
-        <!--Resumenes-->
-        <div class="resumenes">
-            <div class="text-bg-secondary p-3">
-                <br>
-                <!-- Titulo centrado de la seccion-->
-                <div class="row text-center">
-                    <div class="col-4">
-                        <div class="d-flex justify-content-center">
-                            <!--<div class="card text-bg-secondary mb-3" style="width: 28rem;">
-                                <div class="card-header text-center"><h6>Últimas Citas Médicas</h6></div>
-                                <div class="card-body">
-                                    <p class="card-text"><h4>
-                                        <ul id="ultimas-citas">
-                                            <li>Firulais - Consulta general</li>
-                                            <li>Pelusa - Vacunación</li>
-                                        </ul>
-                                    </h4></p>
-                                </div>
-                            </div>-->
-                            <div class="card text-bg-dark mb-3" style="width: 28rem;">
-                                <div class="card-header">Últimas Citas Médicas</div>
-                                <ul class="list-group list-group-flush" id="ultimas-citas">
-                                    
-                                    <li class="list-group-item">Firulais - Consulta general</li>
-                                    <li class="list-group-item">Pelusa - Vacunación</li>
-                                </ul>
-                            </div>
+        <div class="row text-center">
+            <!-- Clientes -->
+            <div class="col-3">
+                <div class="d-flex justify-content-center">
+                    <div class="card mb-3" style="width: 22rem;">
+                        <div class="card-header bg-dark text-white">
+                            <i class="bi bi-people-fill me-2"></i>
+                            <h6>Total Clientes</h6>
+                        </div>
+                        <div class="card-body bg-warning text-dark">
+                            <h2><?= $totalClientes ?></h2>
                         </div>
                     </div>
-                    
-                    <div class="col-4">
-                        <div class="d-flex justify-content-center">
-                            <!--<div class="card text-bg-secondary mb-3" style="width: 28rem;">
-                                <div class="card-header"><h6>Productos con Menor Stock</h6></div>
-                                <div class="card-body">
-                                    <p class="card-text"><h4>
-                                        <ul id="stock-bajo">
-                                            <li>Alimento X - 2 unidades</li>
-                                            <li>Vacuna Y - 1 unidad</li>
-                                        </ul>
-                                    </h4></p>
-                                </div>
-                            </div>-->
-                            <div class="card text-bg-dark mb-3" style="width: 28rem;">
-                                <div class="card-header">Productos con Menor Stock</div>
-                                <ul class="list-group list-group-flush" id="menor-stock">
-                                    <li class="list-group-item">Alimento X - 2 unidades</li>
-                                    <li class="list-group-item">Vacuna Y - 1 unidad</li>
-                                </ul>
-                            </div>
-                        </div>  
+                </div>
+            </div>
+            <!-- Mascotas -->
+            <div class="col-3">
+                <div class="d-flex justify-content-center">
+                    <div class="card mb-3" style="width: 22rem;">
+                        <div class="card-header bg-dark text-white">
+                            <i class="fa fa-paw me-2"></i>
+                            <h6>Total Mascotas</h6>
+                        </div>
+                        <div class="card-body bg-warning text-dark">
+                            <h2><?= $totalMascotas ?></h2>
+                        </div>
                     </div>
-
-                    <div class="col-4">
-                        <div class="d-flex justify-content-center">
-                            <!--<div class="card text-bg-secondary mb-3" style="width: 28rem;">
-                                <div class="card-header"><h6>Próximos Cumpleaños de Mascotas</h6></div>
-                                <div class="card-body">
-                                    <p class="card-text"><h4>
-                                        <ul id="cumple-mascotas">
-                                            <li>Luna - 22 Abril</li>
-                                            <li>Roco - 25 Abril</li>
-                                        </ul>
-                                    </h4></p>
-                                </div>
-                            </div>-->
-                            <div class="card text-bg-dark mb-3" style="width: 28rem;">
-                                <div class="card-header">Próximos Cumpleaños de Mascotas</div>
-                                <ul class="list-group list-group-flush" id="cumple-mascotas">
-                                    <li class="list-group-item">Luna - 28 Abril</li>
-                                    <li class="list-group-item">Roco - 05 Mayo</li>
-                                </ul>
-                            </div>
-                        </div>   
+                </div>
+            </div>
+          <!-- Perros -->
+            <div class="col-3">
+                <div class="d-flex justify-content-center">
+                    <div class="card mb-3" style="width: 22rem;">
+                        <div class="card-header bg-dark text-white">
+                            <i class="fa fa-paw me-2"></i>
+                            <h6>Total Perros</h6>
+                        </div>
+                        <div class="card-body bg-warning text-dark">
+                            <h2><?= $totalPerros ?></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Gatos -->
+            <div class="col-3">
+                <div class="d-flex justify-content-center">
+                    <div class="card mb-3" style="width: 22rem;">
+                        <div class="card-header bg-dark text-white">
+                            <i class="fa fa-paw me-2"></i>
+                            <h6>Total Gatos</h6>
+                        </div>
+                        <div class="card-body bg-warning text-dark">
+                            <h2><?= $totalGatos ?></h2>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <br><br>       
-    <!--</div>-->
-
+      </div>
+    </div>
 <?php
-    }
+}  // fin de dashboard()
 ?>
