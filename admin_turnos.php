@@ -117,6 +117,43 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
         </div>
       </div>
     </div>
+
+    <!-- Modal de alerta de turno ocupado -->
+    <div class="modal fade" id="modalAlerta" tabindex="-1" aria-labelledby="modalAlertaLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="modalAlertaLabel">Turno Ocupado</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <p>El turno seleccionado ya está ocupado.</p>
+            <p>Por favor, elija otro horario.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Entendido</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal de éxito con detalles -->
+  <div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="modalExitoLabel">Turno Asignado Correctamente</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p id="detalleExito"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -148,7 +185,16 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
 
       slots.forEach(cell => {
         cell.addEventListener('click', () => {
-          if (!tipoSelect.value) return alert('Seleccione primero el tipo de turno.');
+          if (!tipoSelect.value) {
+            alert('Seleccione primero el tipo de turno.');
+            return;
+          }
+          if (cell.textContent.trim() === '✔️') {
+            const modal = new bootstrap.Modal(document.getElementById('modalAlerta'));
+            modal.show();
+            return;
+          }
+
           const diaKey    = cell.dataset.day;
           const horaVal   = cell.dataset.hour;
           const tipoId    = tipoSelect.value;
@@ -189,17 +235,30 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
       document.getElementById('btnGuardarTurno').addEventListener('click', () => {
         const formElem = document.getElementById('formTurno');
         const data     = new FormData(formElem);
+
         fetch('guardar_turno.php', { method:'POST', body: data })
           .then(res => res.json())
           .then(resp => {
             if (resp.success) {
-              // Usar data.get en lugar de form.get
-              const diaKey    = data.get('dia');
-              const wdNew     = weekDays.find(w => w.dayKey === diaKey);
-              const horaStr   = data.get('hora');
+              const diaKey = data.get('dia');
+              const horaStr = data.get('hora');
+              const tipoNombre = document.getElementById('inputTipo').value;
+              const clienteNombre = document.getElementById('inputCliente').selectedOptions[0].text;
+              const mascotaNombre = document.getElementById('inputMascota').selectedOptions[0].text;
+              const diaNombre = weekDays.find(w => w.dayKey === diaKey)?.name ?? diaKey;
+
+              document.getElementById('detalleExito').innerHTML = `
+                <strong>Cliente:</strong> ${clienteNombre}<br>
+                <strong>Mascota:</strong> ${mascotaNombre}<br>
+                <strong>Día:</strong> ${diaNombre}<br>
+                <strong>Hora:</strong> ${horaStr}:00<br>
+                <strong>Tipo:</strong> ${tipoNombre}`;
+
+              const wdNew = weekDays.find(w => w.dayKey === diaKey);
               existingTurnos.push({ Fecha: wdNew.dateISO, Hora: `${horaStr}:00`, ID_Tipo_Turno: parseInt(data.get('tipo_id'),10) });
               marcarSlots();
               bootstrap.Modal.getInstance(document.getElementById('modalTurno')).hide();
+              new bootstrap.Modal(document.getElementById('modalExito')).show();
             } else {
               alert('Error: ' + resp.message);
             }

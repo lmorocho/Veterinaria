@@ -1,11 +1,7 @@
 <?php
 // guardar_turno.php
-// Endpoint que recibe datos de un turno y lo guarda en la tabla Turno
-
 header('Content-Type: application/json');
-// Iniciar sesión
 session_start();
-// Incluir conexión a la base de datos
 include('conexion.php');
 
 // Sólo Admin (ID_Rol = 1) o Empleado (ID_Rol = 2) pueden asignar turnos
@@ -25,7 +21,7 @@ if (!$dia || $hora === '' || !$idMascota || !$idTipo) {
     exit;
 }
 
-// Mapear día en español a día en inglés para strtotime
+// Mapear día en español a inglés
 $mapaDias = [
     'lunes'     => 'Monday',
     'martes'    => 'Tuesday',
@@ -33,33 +29,39 @@ $mapaDias = [
     'jueves'    => 'Thursday',
     'viernes'   => 'Friday'
 ];
-
 if (!isset($mapaDias[$dia])) {
     echo json_encode(['success' => false, 'message' => 'Día inválido']);
     exit;
 }
 
-// Calcular fecha correspondiente de la semana en curso
-// Usamos '{EnglishDay} this week' para fijar la fecha a la semana actual
-$fecha = date('Y-m-d', strtotime($mapaDias[$dia] . ' this week'));
-// Formatear hora a HH:MM:SS para SQL
+$fecha   = date('Y-m-d', strtotime($mapaDias[$dia] . ' this week'));
 $horaSql = sprintf('%02d:00:00', intval($hora));
 
-// Obtener ID_Empleado desde la tabla Empleado según el ID_Usuario en sesión
+// Obtener ID_Empleado desde tabla Empleado o usar fallback
 $idUsuario = $_SESSION['usuario']['ID_Usuario'];
 $stmtEmp = $conexion->prepare("SELECT ID_Empleado FROM Empleado WHERE ID_Usuario = ?");
 $stmtEmp->bind_param("i", $idUsuario);
 $stmtEmp->execute();
 $resultEmp = $stmtEmp->get_result();
-if ($row = $resultEmp->fetch_assoc()) {
-    $idEmpleado = intval($row['ID_Empleado']);
-} else {
-    // Si no existe registro en Empleado, usar el usuario mismo como fallback
-    $idEmpleado = $idUsuario;
-}
+$idEmpleado = ($row = $resultEmp->fetch_assoc()) ? intval($row['ID_Empleado']) : $idUsuario;
 $stmtEmp->close();
 
-// Preparar y ejecutar la inserción en la tabla Turno
+// Validamos si la mascota ya tiene turno en esa fecha y hora
+$stmtCheck = $conexion->prepare(
+    "SELECT 1 FROM Turno WHERE Fecha = ? AND Hora = ? AND ID_Mascota = ?"
+);
+$stmtCheck->bind_param("ssi", $fecha, $horaSql, $idMascota);
+$stmtCheck->execute();
+$stmtCheck->store_result();
+
+if ($stmtCheck->num_rows > 0) {
+    echo json_encode(['success' => false, 'message' => 'La mascota ya tiene un turno asignado en ese horario.']);
+    $stmtCheck->close();
+    exit;
+}
+$stmtCheck->close();
+
+// Insertar turno
 $stmt = $conexion->prepare(
     "INSERT INTO Turno (Fecha, Hora, ID_Mascota, ID_Empleado, ID_Tipo_Turno) VALUES (?, ?, ?, ?, ?)"
 );
@@ -70,6 +72,5 @@ if ($stmt->execute()) {
 } else {
     echo json_encode(['success' => false, 'message' => $stmt->error]);
 }
-
 $stmt->close();
 ?>

@@ -9,12 +9,15 @@ $usuario = $_SESSION['usuario']['Nombre_Usuario'] ?? 'Administrador';
 // Calcular fechas de lunes a viernes de la semana actual
 $inicioSemana = strtotime('monday this week');
 $weekDays = [];
+$dayKeys = ['lunes','martes','miercoles','jueves','viernes'];
 $daysNames = ['Lunes','Martes','Miércoles','Jueves','Viernes'];
 for ($i = 0; $i < 5; $i++) {
     $ts = $inicioSemana + 86400 * $i;
     $weekDays[] = [
-        'name' => $daysNames[$i],
-        'date' => date('d/m', $ts)
+        'dayKey'  => $dayKeys[$i],
+        'name'    => $daysNames[$i],
+        'date'    => date('d/m', $ts),
+        'dateISO' => date('Y-m-d', $ts)
     ];
 }
 
@@ -64,7 +67,7 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
           <?php for ($hour = 9; $hour <= 17; $hour++): ?>
             <tr>
               <td><strong><?= sprintf('%02d:00', $hour) ?> - <?= sprintf('%02d:00', $hour+1) ?></strong></td>
-              <?php foreach (['lunes','martes','miercoles','jueves','viernes'] as $day): ?>
+              <?php foreach ($dayKeys as $day): ?>
                 <td class="td-slot" data-day="<?= $day ?>" data-hour="<?= $hour ?>">&nbsp;</td>
               <?php endforeach; ?>
             </tr>
@@ -114,13 +117,33 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
         </div>
       </div>
     </div>
+
+    <!-- Modal de alerta de turno ocupado -->
+    <div class="modal fade" id="modalAlerta" tabindex="-1" aria-labelledby="modalAlertaLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="modalAlertaLabel">Turno Ocupado</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <p>El turno seleccionado ya está ocupado.</p>
+            <p>Por favor, elija otro horario.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Entendido</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     const existingTurnos = <?= json_encode($turnosExistentes) ?>;
+    const weekDays = <?= json_encode($weekDays) ?>;
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', () => {
       const tipoSelect = document.getElementById('tipoTurno');
       const slots = document.querySelectorAll('.td-slot');
 
@@ -130,15 +153,12 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
         if (!tipoId) return;
         existingTurnos.forEach(t => {
           if (t.ID_Tipo_Turno == tipoId) {
-            const fecha = new Date(t.Fecha);
-            const dias = ['domingo','lunes','martes','miercoles','jueves','viernes','sabado'];
-            const diaName = dias[fecha.getDay()];
-            const hora = parseInt(t.Hora.split(':')[0],10);
-            if (hora >= 9 && hora <= 17 && ['lunes','martes','miercoles','jueves','viernes'].includes(diaName)) {
-              const selector = `.td-slot[data-day="${diaName}"][data-hour="${hora}"]`;
-              const cell = document.querySelector(selector);
-              if (cell) cell.textContent = '✔️';
-            }
+            const wd = weekDays.find(w => w.dateISO === t.Fecha);
+            if (!wd) return;
+            const horaVal = parseInt(t.Hora.split(':')[0],10);
+            if (horaVal < 9 || horaVal > 17) return;
+            const cell = document.querySelector(`.td-slot[data-day="${wd.dayKey}"][data-hour="${horaVal}"]`);
+            if (cell) cell.textContent = '✔️';
           }
         });
       }
@@ -147,14 +167,24 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
 
       slots.forEach(cell => {
         cell.addEventListener('click', () => {
-          if (!tipoSelect.value) return alert('Seleccione primero el tipo de turno.');
-          const dia  = cell.dataset.day;
-          const hora = cell.dataset.hour;
+          if (!tipoSelect.value) {
+            alert('Seleccione primero el tipo de turno.');
+            return;
+          }
+          if (cell.textContent.trim() === '✔️') {
+            const modal = new bootstrap.Modal(document.getElementById('modalAlerta'));
+            modal.show();
+            return;
+          }
+
+          const diaKey    = cell.dataset.day;
+          const horaVal   = cell.dataset.hour;
+          const tipoId    = tipoSelect.value;
           const tipoLabel = tipoSelect.selectedOptions[0].text;
 
-          document.getElementById('turnoDia').value    = dia;
-          document.getElementById('turnoHora').value   = hora;
-          document.getElementById('turnoTipoId').value = tipoSelect.value;
+          document.getElementById('turnoDia').value    = diaKey;
+          document.getElementById('turnoHora').value   = horaVal;
+          document.getElementById('turnoTipoId').value = tipoId;
           document.getElementById('inputTipo').value   = tipoLabel;
           document.getElementById('inputCliente').value = '';
           document.getElementById('inputMascota').innerHTML = '<option value="">Seleccione mascota</option>';
@@ -167,7 +197,6 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
         const clienteId = this.value;
         const selectMasc = document.getElementById('inputMascota');
         selectMasc.innerHTML = '<option value="">Cargando...</option>';
-
         fetch(`get_mascotas.php?cliente=${clienteId}`)
           .then(res => res.json())
           .then(data => {
@@ -186,18 +215,23 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
       });
 
       document.getElementById('btnGuardarTurno').addEventListener('click', () => {
-        const form = document.getElementById('formTurno');
-        const data = new FormData(form);
-        fetch('guardar_turno.php',{ method:'POST', body:data })
+        const formElem = document.getElementById('formTurno');
+        const data     = new FormData(formElem);
+        fetch('guardar_turno.php', { method:'POST', body: data })
           .then(res => res.json())
           .then(resp => {
             if (resp.success) {
+              const diaKey    = data.get('dia');
+              const wdNew     = weekDays.find(w => w.dayKey === diaKey);
+              const horaStr   = data.get('hora');
+              existingTurnos.push({ Fecha: wdNew.dateISO, Hora: `${horaStr}:00`, ID_Tipo_Turno: parseInt(data.get('tipo_id'),10) });
               marcarSlots();
               bootstrap.Modal.getInstance(document.getElementById('modalTurno')).hide();
             } else {
               alert('Error: ' + resp.message);
             }
-          }).catch(err => alert('Solicitud fallida: ' + err));
+          })
+          .catch(err => alert('Solicitud fallida: ' + err));
       });
     });
   </script>

@@ -25,7 +25,7 @@ if (!$dia || $hora === '' || !$idMascota || !$idTipo) {
     exit;
 }
 
-// Mapear día en español a fecha de la semana actual
+// Mapear día en español a día en inglés para strtotime
 $mapaDias = [
     'lunes'     => 'Monday',
     'martes'    => 'Tuesday',
@@ -40,7 +40,8 @@ if (!isset($mapaDias[$dia])) {
 }
 
 // Calcular fecha correspondiente de la semana en curso
-$fecha = date('Y-m-d', strtotime('this ' . $mapaDias[$dia]));
+// Usamos '{EnglishDay} this week' para fijar la fecha a la semana actual
+$fecha = date('Y-m-d', strtotime($mapaDias[$dia] . ' this week'));
 // Formatear hora a HH:MM:SS para SQL
 $horaSql = sprintf('%02d:00:00', intval($hora));
 
@@ -53,7 +54,7 @@ $resultEmp = $stmtEmp->get_result();
 if ($row = $resultEmp->fetch_assoc()) {
     $idEmpleado = intval($row['ID_Empleado']);
 } else {
-    // Si no existe registro en Empleado, usar el usuario mismo
+    // Si no existe registro en Empleado, usar el usuario mismo como fallback
     $idEmpleado = $idUsuario;
 }
 $stmtEmp->close();
