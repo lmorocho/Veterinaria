@@ -1,11 +1,24 @@
 <?php
-// agenda_turno_clientes.php
-require('inc/auth_admin.php');
+// agenda_clientes.php
+// Muestra todos los turnos con datos del cliente, mascota, especie, raza y tipo de turno
+
+require('inc/auth_admin.php');   // Validación de sesión Admin
 require('conexion.php');
 require('inc/menu_admin.php');
 
+// Usuario activo
 $usuario = $_SESSION['usuario']['Nombre_Usuario'] ?? 'Administrador';
 
+// Consultas a tablas base para asegurar conexión explícita
+$clientes     = $conexion->query("SELECT ID_Cliente, Nombre, Apellido FROM Cliente")->fetch_all(MYSQLI_ASSOC);
+$mascotas     = $conexion->query("SELECT ID_Mascota, Nombre, ID_Cliente, ID_Raza FROM Mascota")->fetch_all(MYSQLI_ASSOC);
+$especies     = $conexion->query("SELECT ID_Especie, Nombre_Especie FROM Especie")->fetch_all(MYSQLI_ASSOC);
+$razas        = $conexion->query("SELECT ID_Raza, ID_Especie, Nombre_Raza, Color FROM Raza")->fetch_all(MYSQLI_ASSOC);
+$turnos_table = $conexion->query("SELECT ID_Turno, Fecha, Hora, ID_Mascota, ID_Empleado, ID_Tipo_Turno FROM Turno")->fetch_all(MYSQLI_ASSOC);
+// Obtener tipos de turno
+$tipos        = $conexion->query("SELECT ID_Tipo_Turno, Nombre_Tipo_Turno FROM tipo_turno")->fetch_all(MYSQLI_ASSOC);
+
+// Consulta principal uniendo las tablas
 $sql = "
 SELECT
   t.ID_Turno,
@@ -28,17 +41,18 @@ ORDER BY t.Fecha ASC, t.Hora ASC
 $result = $conexion->query($sql);
 $turnos = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 
-$filtrosEspecie = [];
-$filtrosTipos = [];
+// Construir filtros a partir de los datos obtenidos
+$filtrosTipos    = [];
 $filtrosClientes = [];
+$filtrosMascotas = [];
 foreach ($turnos as $t) {
-    $filtrosEspecie[] = $t['Nombre_Especie'];
-    $filtrosTipos[] = $t['Nombre_Tipo_Turno'];
+    $filtrosTipos[]    = $t['Nombre_Tipo_Turno'];
     $filtrosClientes[] = $t['Nombre_Cliente'];
+    $filtrosMascotas[] = $t['Nombre_Mascota'];
 }
-$filtrosEspecie = array_unique($filtrosEspecie);
-$filtrosTipos = array_unique($filtrosTipos);
+$filtrosTipos    = array_unique($filtrosTipos);
 $filtrosClientes = array_unique($filtrosClientes);
+$filtrosMascotas = array_unique($filtrosMascotas);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -56,6 +70,7 @@ $filtrosClientes = array_unique($filtrosClientes);
     <h4>Agenda de Clientes - <?= htmlspecialchars($usuario) ?></h4>
   </div>
   <div class="container mt-5">
+    <!-- Filtros -->
     <div class="row mb-3 no-print">
       <div class="col-md-4">
         <label>Tipo de Turno</label>
@@ -76,11 +91,11 @@ $filtrosClientes = array_unique($filtrosClientes);
         </select>
       </div>
       <div class="col-md-4">
-        <label>Tipo de Mascota</label>
-        <select id="filterEspecie" class="form-select">
+        <label>Mascota</label>
+        <select id="filterMascota" class="form-select">
           <option value="">Todos</option>
-          <?php foreach ($filtrosEspecie as $esp): ?>
-            <option><?= htmlspecialchars($esp) ?></option>
+          <?php foreach ($filtrosMascotas as $masc): ?>
+            <option><?= htmlspecialchars($masc) ?></option>
           <?php endforeach; ?>
         </select>
       </div>
@@ -131,19 +146,19 @@ $filtrosClientes = array_unique($filtrosClientes);
     function filterTable() {
       const tipo = document.getElementById('filterTipo').value.toLowerCase();
       const cliente = document.getElementById('filterCliente').value.toLowerCase();
-      const especie = document.getElementById('filterEspecie').value.toLowerCase();
+      const mascota = document.getElementById('filterMascota').value.toLowerCase();
       document.querySelectorAll('#turnosTable tbody tr').forEach(row => {
         const cells = row.cells;
         const match =
           (!tipo    || cells[6].textContent.toLowerCase() === tipo) &&
           (!cliente || cells[8].textContent.toLowerCase() === cliente) &&
-          (!especie || cells[4].textContent.toLowerCase() === especie);
+          (!mascota || cells[3].textContent.toLowerCase() === mascota);
         row.style.display = match ? '' : 'none';
       });
     }
     document.getElementById('filterTipo').addEventListener('change', filterTable);
     document.getElementById('filterCliente').addEventListener('change', filterTable);
-    document.getElementById('filterEspecie').addEventListener('change', filterTable);
+    document.getElementById('filterMascota').addEventListener('change', filterTable);
   </script>
 </body>
 </html>
