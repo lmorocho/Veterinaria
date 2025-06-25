@@ -13,20 +13,37 @@ $roles = $roles_result->fetch_all(MYSQLI_ASSOC);
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Registro de Usuario (Admin)</title>
+  <title>Registro de Usuario</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/custom.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('img/paws_background.png');
+      background-repeat: repeat;
+      background-attachment: fixed;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(255,255,255,0.5);
+      pointer-events: none;
+      z-index: -1;
+    }
+  </style>
 </head>
 <body>
   <?php menu_admin(); ?>
   <div class="alert alert-warning text-center fst-italic" role="alert">
-    <h4>Bienvenido <?= htmlspecialchars($usuario); ?> al Panel de Administración del Sistema de Veterinaria.</h4>
+  <h4>Registro y Alta de Usuarios - <?= htmlspecialchars($usuario) ?></h4>
   </div>
-  <div class="container mt-5">
-    <h2 class="text-center mb-4">Registro de Usuario - Panel Administrador</h2>
+  <div class="container mt-4">
+    <h2 class="text mb-4">Datos del Usuario</h2>
 
     <?php if (isset($_SESSION['modal_exito'])): ?>
     <div class="modal fade show" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" style="display:block; background: rgba(0,0,0,0.5);">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header bg-dark text-white">
             <h1 class="modal-title fs-5" id="staticBackdropLabel">Registro exitoso</h1>

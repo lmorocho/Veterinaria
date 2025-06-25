@@ -3,6 +3,8 @@ require("inc/auth_admin.php");
 require("conexion.php");
 require("inc/menu_admin.php");
 
+$usuario = $_SESSION['usuario']['Nombre_Usuario'] ?? 'Administrador';
+
 $roles = $conexion->query("SELECT ID_Rol, Nombre_Rol FROM Rol_Usuario")->fetch_all(MYSQLI_ASSOC);
 
 $filtroRol = $_GET['rol'] ?? '';
@@ -48,15 +50,32 @@ $mascotas = $conexion->query("SELECT * FROM Mascota")->fetch_all(MYSQLI_ASSOC);
   <title>Reporte General por Rol</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script>function imprimirReporte() { window.print(); }</script>
+  <link href="css/custom.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('img/paws_background.png');
+      background-repeat: repeat;
+      background-attachment: fixed;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(255,255,255,0.5);
+      pointer-events: none;
+      z-index: -1;
+    }
+  </style>
 </head>
 <body>
   <?php menu_admin(); ?>
   <div class="alert alert-warning text-center fst-italic" role="alert">
-    <h4>Bienvenido <?= htmlspecialchars($_SESSION['usuario']['Nombre_Usuario'] ?? 'Administrador'); ?> al Panel de Administración del Sistema de Veterinaria.</h4>
+    <h4>Reporte de General de Usuarios - <?= htmlspecialchars($usuario) ?></h4>
   </div>
   <div class="container mt-4">
     
-    <h2 class="mb-4">Reporte General</h2>
+    <!--<h2 class="mb-4">Reporte General</h2>-->
 
     <div class="mb-3">
       <a href="#" onclick="imprimirReporte()" class="btn btn-outline-secondary">🖨️ Imprimir / Exportar PDF</a>

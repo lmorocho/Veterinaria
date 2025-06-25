@@ -46,8 +46,26 @@ $filtrosClientes = array_unique($filtrosClientes);
   <meta charset="UTF-8">
   <title>Agenda de Turnos - <?= htmlspecialchars($usuario) ?></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
+  <script>function imprimirReporte() { window.print(); }</script>
+  <!--<style>
     @media print { .no-print { display: none; } }
+  </style>-->
+  <link href="css/custom.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('img/paws_background.png');
+      background-repeat: repeat;
+      background-attachment: fixed;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(255,255,255,0.5);
+      pointer-events: none;
+      z-index: -1;
+    }
   </style>
 </head>
 <body>
@@ -55,7 +73,10 @@ $filtrosClientes = array_unique($filtrosClientes);
   <div class="alert alert-warning text-center fst-italic mt-0 no-print" role="alert">
     <h4>Agenda de Clientes - <?= htmlspecialchars($usuario) ?></h4>
   </div>
-  <div class="container mt-5">
+  <div class="container mt-4">
+    <div class="mb-3">
+      <button onclick="imprimirReporte()" class="btn btn-outline-secondary">🖨️ Imprimir / Exportar PDF</button>
+    </div>
     <div class="row mb-3 no-print">
       <div class="col-md-4">
         <label>Tipo de Turno</label>
@@ -85,9 +106,9 @@ $filtrosClientes = array_unique($filtrosClientes);
         </select>
       </div>
     </div>
-    <div class="text-end mb-3 no-print">
+    <!--<div class="text-end mb-3 no-print">
       <button onclick="window.print()" class="btn btn-secondary">Imprimir PDF</button>
-    </div>
+    </div>-->
 
     <?php if (empty($turnos)): ?>
       <div class="alert alert-info">No hay turnos agendados.</div>
