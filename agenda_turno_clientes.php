@@ -23,7 +23,7 @@ FROM Turno t
   JOIN Especie e ON r.ID_Especie = e.ID_Especie
   JOIN tipo_turno tt ON t.ID_Tipo_Turno = tt.ID_Tipo_Turno
   JOIN Cliente c ON m.ID_Cliente = c.ID_Cliente
-ORDER BY t.Fecha ASC, t.Hora ASC
+ORDER BY t.Fecha DESC, t.Hora ASC, t.ID_turno
 ";
 $result = $conexion->query($sql);
 $turnos = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];

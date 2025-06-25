@@ -171,8 +171,8 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
     <div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header bg-dark text-white">
-            <h5 class="modal-title" id="modalExitoLabel">Turno Asignado Correctamente ✔️</h5>
+          <div class="modal-header bg-success text-white">
+            <h5 class="modal-title" id="modalExitoLabel">Turno Asignado Correctamente</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
           </div>
           <div class="modal-body">
@@ -201,7 +201,6 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
       function marcarSlots() {
         slots.forEach(cell => cell.textContent = '');
         const tipoId = tipoSelect.value;
-        if (!tipoId) return; // Evitamos mostrar los checks si no se selecciona tipo
         existingTurnos.forEach(t => {
           if (tipoId && t.ID_Tipo_Turno != tipoId) return;
           const wd = weekDays.find(w => w.dateISO === t.Fecha);

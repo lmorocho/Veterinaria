@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-06-2025 a las 23:27:06
+-- Tiempo de generación: 25-06-2025 a las 02:41:24
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -381,7 +381,9 @@ INSERT INTO `turno` (`ID_Turno`, `Fecha`, `Hora`, `ID_Mascota`, `ID_Empleado`, `
 (11, '2025-06-16', '14:00:00', 15, 5, 2),
 (12, '2025-06-16', '11:00:00', 15, 5, 2),
 (13, '2025-06-16', '12:00:00', 6, 5, 1),
-(14, '2025-06-23', '09:00:00', 13, 5, 3);
+(14, '2025-06-23', '09:00:00', 13, 5, 3),
+(15, '2025-06-24', '10:00:00', 15, 5, 3),
+(16, '2025-06-24', '09:00:00', 5, 5, 2);
 
 -- --------------------------------------------------------
 
@@ -697,7 +699,7 @@ ALTER TABLE `tipo_turno`
 -- AUTO_INCREMENT de la tabla `turno`
 --
 ALTER TABLE `turno`
-  MODIFY `ID_Turno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `ID_Turno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
