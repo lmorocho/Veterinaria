@@ -90,7 +90,8 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
 
     <!-- Modal para crear turno -->
     <div class="modal fade" id="modalTurno" tabindex="-1" aria-labelledby="modalTurnoLabel" aria-hidden="true">
-      <div class="modal-dialog">
+    <!-- Centramos el modal -->
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header bg-dark text-white">
             <h5 class="modal-title" id="modalTurnoLabel">Asignar Turno</h5>
@@ -132,7 +133,7 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
     
     <!-- Modal de alerta Seleccione un tipo de turno -->
     <div class="modal fade" id="modalAlertaTipo" tabindex="-1" aria-labelledby="modalAlertaTipoLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header bg-warning text-white">
             <h5 class="modal-title" id="modalAlertaTipoLabel">Tipo de Turno</h5>
@@ -150,7 +151,7 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
 
     <!-- Modal de alerta de turno ocupado -->
     <div class="modal fade" id="modalAlerta" tabindex="-1" aria-labelledby="modalAlertaLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header bg-danger text-white">
             <h5 class="modal-title" id="modalAlertaLabel">Turno Ocupado</h5>
@@ -169,7 +170,7 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
 
     <!-- Modal de éxito con detalles -->
     <div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header bg-dark text-white">
             <h5 class="modal-title" id="modalExitoLabel">Turno Asignado Correctamente ✔️</h5>
