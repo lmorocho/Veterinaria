@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-06-2025 a las 02:41:24
+-- Tiempo de generación: 05-07-2025 a las 00:39:37
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,61 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `veterinariabd`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `backup_mascotas`
+--
+
+CREATE TABLE `backup_mascotas` (
+  `ID_Backup_Mascota` int(11) NOT NULL,
+  `ID_Mascota` int(11) DEFAULT NULL,
+  `ID_Cliente` int(11) DEFAULT NULL,
+  `Nombre_Mascota` varchar(50) DEFAULT NULL,
+  `Fecha_Nacimiento` date DEFAULT NULL,
+  `ID_Raza` int(11) DEFAULT NULL,
+  `ID_Especie` int(11) DEFAULT NULL,
+  `Fecha_Backup` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `backup_mascotas`
+--
+
+INSERT INTO `backup_mascotas` (`ID_Backup_Mascota`, `ID_Mascota`, `ID_Cliente`, `Nombre_Mascota`, `Fecha_Nacimiento`, `ID_Raza`, `ID_Especie`, `Fecha_Backup`) VALUES
+(1, 16, 8, 'bet', '2022-02-20', 1, 1, '2025-07-04 21:47:57');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `backup_usuarios`
+--
+
+CREATE TABLE `backup_usuarios` (
+  `ID_Backup` int(11) NOT NULL,
+  `Tipo_Perfil` enum('Administrador','Empleado','Cliente','Usuario') NOT NULL,
+  `ID_Original` int(11) NOT NULL COMMENT 'ID_Empleado o ID_Cliente',
+  `ID_Usuario` int(11) NOT NULL COMMENT 'Clave foránea a usuario',
+  `Nombre` varchar(50) DEFAULT NULL COMMENT 'Datos del perfil tabla Empleado o Cliente',
+  `Apellido` varchar(50) DEFAULT NULL COMMENT 'Datos del perfil tabla Empleado o Cliente',
+  `DNI` varchar(20) DEFAULT NULL COMMENT 'Datos del perfil tabla Empleado o Cliente',
+  `Fecha_Nacimiento` date DEFAULT NULL COMMENT 'Datos del perfil tabla Empleado o Cliente',
+  `Email` varchar(100) DEFAULT NULL COMMENT 'Datos del perfil tabla Empleado o Cliente',
+  `Telefono` varchar(20) DEFAULT NULL COMMENT 'Datos del perfil tabla Empleado o Cliente',
+  `Direccion` varchar(150) DEFAULT NULL COMMENT 'Datos del perfil tabla Empleado o Cliente',
+  `Nombre_Usuario` varchar(50) DEFAULT NULL COMMENT 'Datos de login del usuario',
+  `Password` varchar(255) DEFAULT NULL COMMENT 'Datos de login del usuario',
+  `ID_Rol` int(11) DEFAULT NULL COMMENT 'Datos de login del usuario',
+  `Fecha_Backup` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `backup_usuarios`
+--
+
+INSERT INTO `backup_usuarios` (`ID_Backup`, `Tipo_Perfil`, `ID_Original`, `ID_Usuario`, `Nombre`, `Apellido`, `DNI`, `Fecha_Nacimiento`, `Email`, `Telefono`, `Direccion`, `Nombre_Usuario`, `Password`, `ID_Rol`, `Fecha_Backup`) VALUES
+(3, 'Cliente', 8, 16, 'Cliente3', 'Cliente3', '13678987', '2000-01-01', 'cliente3@cliente.com', '1112345678', 'cliente3', 'cliente3', '123', 3, '2025-07-04 21:47:57');
 
 -- --------------------------------------------------------
 
@@ -383,7 +438,8 @@ INSERT INTO `turno` (`ID_Turno`, `Fecha`, `Hora`, `ID_Mascota`, `ID_Empleado`, `
 (13, '2025-06-16', '12:00:00', 6, 5, 1),
 (14, '2025-06-23', '09:00:00', 13, 5, 3),
 (15, '2025-06-24', '10:00:00', 15, 5, 3),
-(16, '2025-06-24', '09:00:00', 5, 5, 2);
+(16, '2025-06-24', '09:00:00', 5, 5, 2),
+(17, '2025-06-23', '10:00:00', 11, 5, 3);
 
 -- --------------------------------------------------------
 
@@ -433,6 +489,18 @@ CREATE TABLE `venta` (
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `backup_mascotas`
+--
+ALTER TABLE `backup_mascotas`
+  ADD PRIMARY KEY (`ID_Backup_Mascota`);
+
+--
+-- Indices de la tabla `backup_usuarios`
+--
+ALTER TABLE `backup_usuarios`
+  ADD PRIMARY KEY (`ID_Backup`);
 
 --
 -- Indices de la tabla `cliente`
@@ -594,10 +662,22 @@ ALTER TABLE `venta`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `backup_mascotas`
+--
+ALTER TABLE `backup_mascotas`
+  MODIFY `ID_Backup_Mascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `backup_usuarios`
+--
+ALTER TABLE `backup_usuarios`
+  MODIFY `ID_Backup` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `ID_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `compra`
@@ -645,7 +725,7 @@ ALTER TABLE `especie`
 -- AUTO_INCREMENT de la tabla `mascota`
 --
 ALTER TABLE `mascota`
-  MODIFY `ID_Mascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ID_Mascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `precio`
@@ -699,13 +779,13 @@ ALTER TABLE `tipo_turno`
 -- AUTO_INCREMENT de la tabla `turno`
 --
 ALTER TABLE `turno`
-  MODIFY `ID_Turno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `ID_Turno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `ID_Usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ID_Usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `venta`

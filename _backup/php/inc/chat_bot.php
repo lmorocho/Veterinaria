@@ -196,7 +196,7 @@ function chatbot() {
       switch(tipo) {
         case '1': respuesta = '⏰ Atendemos de lunes a viernes de 9 a 18 hs y sábados de 9 a 13 hs.'; break;
         case '2': respuesta = '💉 Las vacunas esenciales incluyen antirrábica, séxtuple y triple felina.'; break;
-        case '3': respuesta = '📍 Estamos en Entre Ríos 1234, CABA.'; break;
+        case '3': respuesta = '📍 Estamos en Av. Boedo 1870, CABA.'; break;
         case '4': respuesta = '☎️ Nuestro número es (011) 1234-5678.'; break;
         case '5': respuesta = '🚨 Sí, atendemos urgencias. Llamanos al (011) 1234-5678.'; break;
         default: respuesta = '❓ Por favor ingresa un número del 1 al 5.';

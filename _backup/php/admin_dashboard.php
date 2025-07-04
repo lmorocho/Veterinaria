@@ -20,7 +20,24 @@
   <link href="css/custom.css" rel="stylesheet">
   <?php  
     require("inc/chat_bot.php");
+    require("inc/dashboard_veterinaria.php");
   ?>
+  <style>
+    body {
+      background-image: url('img/fondo_pet.jpg');
+      background-repeat: repeat;
+      background-attachment: fixed;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(255,255,255,0.5);
+      pointer-events: none;
+      z-index: -1;
+    }
+  </style>
 </head>
 <body>
 
@@ -29,7 +46,10 @@
   <div class="alert alert-warning text-center fst-italic mt-0" role="alert"><!--Color cambiado a warning-->
     <h4>Bienvenido <?= htmlspecialchars($usuario); ?> al Panel de Administración del Sistema de Veterinaria.</h4>
   </div>
-  
+  <!-- Dashboard Veterinaria con estadística de los clientes y mascotas -->
+  <br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <?/*php dashboard(); */?>
+
   <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
   <?php chatbot(); ?>
   

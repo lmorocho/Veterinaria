@@ -1,0 +1,62 @@
+
+SQL Veterinaria
+
+*** CREACION DE TABLA BACKUP PARA ELMINACION DE USUARIOS ****
+
+CREATE TABLE backup_usuarios (
+    ID_Backup INT PRIMARY KEY AUTO_INCREMENT,
+    Tipo_Perfil ENUM('Cliente', 'Empleado') NOT NULL,
+    
+    -- Datos de la tabla original (cliente o empleado)
+    ID_Original INT NOT NULL,            -- ID_Cliente o ID_Empleado
+    ID_Usuario INT NOT NULL,             -- Clave foránea a usuario
+    
+    -- Datos del perfil tabla Empleado o Cliente
+    Nombre VARCHAR(50),
+    Apellido VARCHAR(50),
+    DNI VARCHAR(20),
+    Fecha_Nacimiento DATE,
+    Email VARCHAR(100),
+    Telefono VARCHAR(20),
+    Direccion VARCHAR(150),
+    
+    -- Datos de login del usuario
+    Nombre_Usuario VARCHAR(50),
+    Password VARCHAR(255),
+    ID_Rol INT,
+    
+    -- Control
+    Fecha_Backup TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+## Proceso completo al hacer un backup antes de eliminar
+## Para un cliente:
+
+# PRIMERO
+INSERT INTO backup_usuarios (
+    Tipo_Perfil, ID_Original, ID_Usuario, Nombre, Apellido, DNI,
+    Fecha_Nacimiento, Email, Telefono, Direccion,
+    Nombre_Usuario, Password, ID_Rol
+)
+SELECT 
+    'Cliente', c.ID_Cliente, c.ID_Usuario, c.Nombre, c.Apellido, c.DNI,
+    c.Fecha_Nacimiento, c.Email, c.Telefono, c.Direccion,
+    u.Nombre_Usuario, u.Password, u.ID_Rol
+FROM cliente c
+JOIN usuario u ON c.ID_Usuario = u.ID_Usuario
+WHERE c.ID_Cliente = 5;
+
+# SEGUNDO
+DELETE FROM cliente WHERE ID_Cliente = 5;
+DELETE FROM usuario WHERE ID_Usuario = 123;
+
+## PARA RESTAURAR UN CLIENTE
+
+INSERT INTO cliente (ID_Usuario, Nombre, Apellido, DNI, Fecha_Nacimiento, Email, Telefono, Direccion)
+SELECT ID_Usuario, Nombre, Apellido, DNI, Fecha_Nacimiento, Email, Telefono, Direccion
+FROM backup_usuarios
+WHERE ID_Backup = 10 AND Tipo_Perfil = 'Cliente';
+
+
+
+

@@ -1,5 +1,6 @@
 <?php
-session_start(); 
+/*session_start();*/
+require("inc/auth_cliente.php");
 require("conexion.php");
 
 // Validar sesión del cliente

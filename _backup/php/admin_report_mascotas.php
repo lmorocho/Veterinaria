@@ -49,6 +49,23 @@ $razas    = $conexion->query("SELECT ID_Raza, Nombre_Raza FROM Raza")->fetch_all
   <title>Reporte de Mascotas</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script>function imprimirReporte() { window.print(); }</script>
+  <link href="css/custom.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url('img/paws_background.png');
+      background-repeat: repeat;
+      background-attachment: fixed;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(255,255,255,0.5);
+      pointer-events: none;
+      z-index: -1;
+    }
+  </style>
 </head>
 <body>
   <?php menu_admin(); ?>

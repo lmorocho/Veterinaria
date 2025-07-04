@@ -35,6 +35,22 @@
       width: 100%;
       height: 380px;
     }
+
+    body {
+      /*background-image: url('img/fondo_pet.jpg');*/
+      background-image: url('img/paws_background.png');
+      background-repeat: repeat;
+      background-attachment: fixed;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      /*background: rgba(255,255,255,0.5);*/
+      pointer-events: none;
+      z-index: -1;
+    }
   </style>
 </head>
 <body>
@@ -97,7 +113,7 @@
         <h4>Tu veterinaria de confianza</h4>
         <p>En Veterinaria Entre Ríos, cuidamos de tus mascotas como si fueran nuestras. Ofrecemos servicios de salud, estética y bienestar para que tu compañero peludo esté siempre feliz y saludable.</p>
         <p>Contamos con un equipo de profesionales apasionados por los animales, listos para brindarte la mejor atención y asesoramiento. ¡Tu mascota merece lo mejor!</p>
-        <p>Visítanos en nuestra sucursal en Entre Ríos 1234, CABA, o contáctanos al (011) 1234-5678. Estamos aquí para ayudarte a cuidar de tu mejor amigo.</p>
+        <p>Visítanos en nuestra sucursal en Av. Boedo 1870, CABA; o contáctanos al (011) 1234-5678. Estamos aquí para ayudarte a cuidar de tu mejor amigo.</p>
     </div>
 
     <!-- Imagen y mapa Google Maps -->

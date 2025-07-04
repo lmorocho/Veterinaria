@@ -35,3 +35,139 @@
   filter: brightness(0.3); /* 0 = negro puro, 1 = original */
 }
 
+
+body {
+  background-image: url('img/fondo_pet.jpg');
+  background-repeat: repeat;
+  background-attachment: fixed;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  /* Capa semitransparente para “opacar” el fondo */
+  background: rgba(255,255,255,0.5);
+  pointer-events: none;
+  z-index: -1;
+}
+
+#chatbox {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  width: 320px;
+  max-height: 500px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  overflow: hidden;
+  z-index: 1000;
+  font-size: 14px;
+  display: none;
+  flex-direction: column;
+}
+#chat-header {
+  background: rgb(10, 10, 10);
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  cursor: move;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#chat-body {
+  padding: 10px;
+  flex: 1;
+  overflow-y: auto;
+}
+.chat-button {
+  display: block;
+  margin: 5px 0;
+  padding: 8px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+}
+#chat-footer {
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+#numero-input {
+  flex: 1;
+  padding: 6px 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+#enviar-btn {
+  padding: 6px 12px;
+  background: rgb(241, 140, 6);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+#chat-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgb(135, 65, 25);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  z-index: 1100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+/* Estilos formulario "Olvidé contraseña" */
+#forgot-password-form {
+  margin-top: 10px;
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+}
+#forgot-password-form input[type="email"] {
+  padding: 6px 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+#forgot-password-form button {
+  padding: 6px 12px;
+  background: rgb(212, 209, 17);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+#forgot-message {
+  margin-top: 8px;
+  color: green;
+  font-weight: bold;
+}
+#forgot-password-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: rgb(6, 49, 240);
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 13px;
+}

@@ -244,6 +244,7 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
                 <strong>Mascota:</strong> ${mascotaNombre}<br>
                 <strong>Día:</strong> ${diaNombre}<br>
                 <strong>Hora:</strong> ${horaStr}:00<br>
+                <strong>Hora:</strong> ${horaStr}:00<br>
                 <strong>Tipo:</strong> ${tipoNombre}`;
               const wdNew = weekDays.find(w => w.dayKey === diaKey);
               existingTurnos.push({ Fecha: wdNew.dateISO, Hora: `${horaStr}:00`, ID_Tipo_Turno: parseInt(data.get('tipo_id'),10) });

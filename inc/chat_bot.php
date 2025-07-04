@@ -130,7 +130,7 @@ function chatbot() {
 
   <div id="chatbox" role="region" aria-live="polite" aria-label="Asistente veterinaria">
     <div id="chat-header">
-      <!-- Ícono de asistente con Font Awesome -->
+      <!-- Agregamos un icono de asistente con Font Awesome -->
       <i class="fa fa-heartbeat"></i>
       <span>Asistente Veterinaria</span>
     </div>

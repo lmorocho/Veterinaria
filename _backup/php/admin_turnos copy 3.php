@@ -35,22 +35,9 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
   <meta charset="UTF-8">
   <title>Gestión de Turnos</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/custom.css" rel="stylesheet">
   <style>
-    body {
-      background-image: url('img/paws_background.png');
-      background-repeat: repeat;
-      background-attachment: fixed;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(255,255,255,0.5);
-      pointer-events: none;
-      z-index: -1;
-    }
+    th, td { vertical-align: middle !important; }
+    .fw-bold { font-weight: bold; }
   </style>
 </head>
 <body>
@@ -103,8 +90,7 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
 
     <!-- Modal para crear turno -->
     <div class="modal fade" id="modalTurno" tabindex="-1" aria-labelledby="modalTurnoLabel" aria-hidden="true">
-    <!-- Centramos el modal -->
-      <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header bg-dark text-white">
             <h5 class="modal-title" id="modalTurnoLabel">Asignar Turno</h5>
@@ -146,7 +132,7 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
     
     <!-- Modal de alerta Seleccione un tipo de turno -->
     <div class="modal fade" id="modalAlertaTipo" tabindex="-1" aria-labelledby="modalAlertaTipoLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header bg-warning text-white">
             <h5 class="modal-title" id="modalAlertaTipoLabel">Tipo de Turno</h5>
@@ -164,7 +150,7 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
 
     <!-- Modal de alerta de turno ocupado -->
     <div class="modal fade" id="modalAlerta" tabindex="-1" aria-labelledby="modalAlertaLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header bg-danger text-white">
             <h5 class="modal-title" id="modalAlertaLabel">Turno Ocupado</h5>
@@ -183,10 +169,10 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
 
     <!-- Modal de éxito con detalles -->
     <div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header bg-dark text-white">
-            <h5 class="modal-title" id="modalExitoLabel">Turno Asignado Correctamente ✔️</h5>
+          <div class="modal-header bg-success text-white">
+            <h5 class="modal-title" id="modalExitoLabel">Turno Asignado Correctamente</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
           </div>
           <div class="modal-body">
@@ -215,7 +201,6 @@ $turnosExistentes = $conexion->query("SELECT Fecha, Hora, ID_Tipo_Turno FROM Tur
       function marcarSlots() {
         slots.forEach(cell => cell.textContent = '');
         const tipoId = tipoSelect.value;
-        if (!tipoId) return; // Evitamos mostrar los checks si no se selecciona tipo
         existingTurnos.forEach(t => {
           if (tipoId && t.ID_Tipo_Turno != tipoId) return;
           const wd = weekDays.find(w => w.dateISO === t.Fecha);

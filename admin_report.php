@@ -1,4 +1,6 @@
 <?php
+
+//admin_report.php
 require("inc/auth_admin.php");
 require("conexion.php");
 require("inc/menu_admin.php");

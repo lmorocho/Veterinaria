@@ -23,6 +23,22 @@
   <?php  
     require("inc/chat_bot.php");
   ?>
+  <style>
+    body {
+      background-image: url('img/fondo_pet.jpg');
+      background-repeat: repeat;
+      background-attachment: fixed;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(255,255,255,0.5);
+      pointer-events: none;
+      z-index: -1;
+    }
+  </style>
 </head>
 <body>
 

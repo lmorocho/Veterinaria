@@ -1,0 +1,8 @@
+HOSTING: https://veterinaria.byethost7.com/
+
+index.php
+
+user: admin
+pass: 123
+
+https://github.com/lmorocho/Veterinaria.git
