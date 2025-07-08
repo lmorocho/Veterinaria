@@ -35,11 +35,14 @@ function menu_admin() {
           <ul class="dropdown-menu dropdown-menu-dark bg-dark" aria-labelledby="registroDropdown">
             <li><a class="dropdown-item" href="admin_registro.php">Altas y Registros Usuarios</a></li>
             <li><a class="dropdown-item" href="admin_usuarios.php">Edición o Borrado de Usuarios</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="admin_proveedor_registro.php">Altas de Proveedores</a></li>
+            <li><a class="dropdown-item" href="admin_proveedor_registro.php">Edición o Borrado de Proveedores</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="registroDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Mascotas
+            Gestión Mascotas
           </a>
           <!--<ul class="dropdown-menu" aria-labelledby="registroDropdown">-->
           <ul class="dropdown-menu dropdown-menu-dark bg-dark" aria-labelledby="registroDropdown">
@@ -49,20 +52,33 @@ function menu_admin() {
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="registroDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Reportes
+            Gestión Reportes
           </a>
           <!--<ul class="dropdown-menu" aria-labelledby="registroDropdown">-->
           <ul class="dropdown-menu dropdown-menu-dark bg-dark" aria-labelledby="registroDropdown">
             <li><a class="dropdown-item" href="admin_report.php">Reporte Usuarios</a></li>
             <li><a class="dropdown-item" href="admin_report_mascotas.php">Reporte Mascotas</a></li>
+            <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="admin_report_backup.php">Reporte Backup de Usuario & Mascotas</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="registroDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Gestión de Turnos
+          </a>
+          <!--<ul class="dropdown-menu" aria-labelledby="registroDropdown">-->
+          <ul class="dropdown-menu dropdown-menu-dark bg-dark" aria-labelledby="registroDropdown">
+            <li><a class="dropdown-item" href="admin_turnos.php">Alta Turnos</a></li>
+            <li><a class="dropdown-item" href="agenda_turno_clientes.php">Cancelación Turnos</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="agenda_turno_clientes.php">Agenda de Turnos</a></li>
           </ul>
         </li>
         <!--<li class="nav-item"><a class="nav-link" href="empleado_dashboard.php">Empleado</a></li>
         <li class="nav-item"><a class="nav-link" href="cliente_dashboard.php">Cliente</a></li>
         <li class="nav-item"><a class="nav-link" href="proveedor_dashboard.php">Proveedor</a></li>-->
-        <li class="nav-item"><a class="nav-link" href="admin_turnos.php">Gestión de Turnos</a></li>
-        <li class="nav-item"><a class="nav-link" href="agenda_turno_clientes.php">Agenda</a></li>
+        <!--<li class="nav-item"><a class="nav-link" href="admin_turnos.php">Gestión de Turnos</a></li>
+        <li class="nav-item"><a class="nav-link" href="agenda_turno_clientes.php">Agenda</a></li>-->
         <li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Historial Médico</a></li>
       </ul>
 

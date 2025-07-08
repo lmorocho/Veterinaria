@@ -1,12 +1,13 @@
 <?php
+//admin_registro.php
 require("inc/auth_admin.php");
 require("conexion.php");
 require("inc/menu_admin.php");
 
 $usuario = $_SESSION['usuario']['Nombre_Usuario'] ?? 'Administrador';
 
-// Consulta de roles para el select
-$roles_result = $conexion->query("SELECT ID_Rol, Nombre_Rol FROM Rol_Usuario");
+// Consulta de roles para el select excepto para el rol de Proveedor (ID_Rol = 4)
+$roles_result = $conexion->query("SELECT ID_Rol, Nombre_Rol FROM Rol_Usuario where ID_Rol != 4");
 $roles = $roles_result->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -36,7 +37,8 @@ $roles = $roles_result->fetch_all(MYSQLI_ASSOC);
 <body>
   <?php menu_admin(); ?>
   <div class="alert alert-warning text-center fst-italic" role="alert">
-  <h4>Registro y Alta de Usuarios - <?= htmlspecialchars($usuario) ?></h4>
+  <h4>Registro y Alta de Usuarios</h4>
+  
   </div>
   <div class="container mt-4">
     <h2 class="text mb-4">Datos del Usuario</h2>

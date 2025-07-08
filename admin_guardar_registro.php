@@ -1,5 +1,6 @@
 <?php
-session_start();
+//session_start();
+require("inc/auth_admin.php");
 include("conexion.php");
 
 // Verificar sesión y rol de Administrador

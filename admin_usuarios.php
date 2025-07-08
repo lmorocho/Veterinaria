@@ -32,7 +32,7 @@ if ($filtroRol !== '') {
                  . " WHERE u.ID_Rol = ?";
             break;
         case 4:
-            $sql = "SELECT p.ID_Proveedor AS id, p.Razon_Social AS Nombre, '' AS Apellido, p.Email, r.Nombre_Rol"
+            $sql = "SELECT p.ID_Proveedor AS id, p.Nombre AS Nombre, p.Empresa AS Apellido, p.Email, r.Nombre_Rol"
                  . " FROM Proveedor p"
                  . " INNER JOIN Usuario u ON p.ID_Usuario = u.ID_Usuario"
                  . " INNER JOIN Rol_Usuario r ON u.ID_Rol = r.ID_Rol"
@@ -179,7 +179,7 @@ if ($filtroRol !== '') {
         editModal.show();
       }));
       document.getElementById('confirmEditBtn').addEventListener('click', () => {
-        window.location.href = `admin_registro.php?rol=${selectedRol}&id=${selectedId}`;
+        window.location.href = `admin_edit_usuarios.php?rol=${selectedRol}&id=${selectedId}`;
       });
       document.querySelectorAll('.btn-delete').forEach(btn => btn.addEventListener('click', () => {
         selectedRol = btn.dataset.rol;
