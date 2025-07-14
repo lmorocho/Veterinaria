@@ -69,7 +69,7 @@ function menu_admin() {
           <!--<ul class="dropdown-menu" aria-labelledby="registroDropdown">-->
           <ul class="dropdown-menu dropdown-menu-dark bg-dark" aria-labelledby="registroDropdown">
             <li><a class="dropdown-item" href="admin_turnos.php">Alta Turnos</a></li>
-            <li><a class="dropdown-item" href="agenda_turno_clientes.php">Cancelación Turnos</a></li>
+            <li><a class="dropdown-item" href="admin_turnos_cancelar.php">Cancelación Turnos</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="agenda_turno_clientes.php">Agenda de Turnos</a></li>
           </ul>

@@ -16,6 +16,26 @@ if (!$rol || !$idOriginal) {
     exit;
 }
 
+// Validación previa para clientes con turnos asignados
+if ($rol === 3) {
+    $stmtChk = $conexion->prepare(
+        "SELECT COUNT(*) FROM Turno t
+         JOIN Mascota m ON t.ID_Mascota = m.ID_Mascota
+         WHERE m.ID_Cliente = ?"
+    );
+    $stmtChk->bind_param("i", $idOriginal);
+    $stmtChk->execute();
+    $stmtChk->bind_result($count);
+    $stmtChk->fetch();
+    $stmtChk->close();
+
+    if ($count > 0) {
+        // No eliminar hasta cancelar turnos
+        header('Location: admin_usuarios.php?rol=3&error=hasTurns');
+        exit;
+    }
+}
+
 try {
     // Iniciar transacción
     $conexion->begin_transaction();

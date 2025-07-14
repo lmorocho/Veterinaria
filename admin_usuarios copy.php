@@ -6,8 +6,12 @@ require("inc/menu_admin.php");
 
 $usuario = $_SESSION['usuario']['Nombre_Usuario'] ?? 'Administrador';
 
-// Obtener roles disponibles
-$roles = $conexion->query("SELECT ID_Rol, Nombre_Rol FROM Rol_Usuario")->fetch_all(MYSQLI_ASSOC);
+// Obtener roles disponibles (Version Anterior)
+//$roles = $conexion->query("SELECT ID_Rol, Nombre_Rol FROM Rol_Usuario")->fetch_all(MYSQLI_ASSOC);
+
+// Consulta de roles para el select, excluyendo Proveedor (ID_Rol = 4) (Version Nueva)
+$roles_result = $conexion->query("SELECT ID_Rol, Nombre_Rol FROM Rol_Usuario WHERE ID_Rol <> 4");
+$roles = $roles_result->fetch_all(MYSQLI_ASSOC);
 
 // Rol filtrado y datos iniciales
 $filtroRol = $_GET['rol'] ?? '';
@@ -31,13 +35,13 @@ if ($filtroRol !== '') {
                  . " INNER JOIN Rol_Usuario r ON u.ID_Rol = r.ID_Rol"
                  . " WHERE u.ID_Rol = ?";
             break;
-        case 4:
-            $sql = "SELECT p.ID_Proveedor AS id, p.Razon_Social AS Nombre, '' AS Apellido, p.Email, r.Nombre_Rol"
+        /*case 4: (Omitimos Proveedor en esta versión)
+            $sql = "SELECT p.ID_Proveedor AS id, p.Nombre AS Nombre, p.Empresa AS Apellido, p.Email, r.Nombre_Rol"
                  . " FROM Proveedor p"
                  . " INNER JOIN Usuario u ON p.ID_Usuario = u.ID_Usuario"
                  . " INNER JOIN Rol_Usuario r ON u.ID_Rol = r.ID_Rol"
                  . " WHERE u.ID_Rol = ?";
-            break;
+            break;*/
         default:
             $sql = null;
     }
@@ -57,10 +61,9 @@ if ($filtroRol !== '') {
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Gestion de Usuarios</title>
+  <title>Gestión de Usuarios</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!--<script>function imprimirReporte(){ window.print(); }</script>-->
-  <link href="css/custom.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     body {
       background-image: url('img/paws_background.png');
@@ -84,9 +87,6 @@ if ($filtroRol !== '') {
       <h4>Gestión General de Usuarios - <?= htmlspecialchars($usuario) ?></h4>
     </div>
   <div class="container mt-4">
-    <!--<div class="mb-3">
-      <a href="#" onclick="imprimirReporte()" class="btn btn-outline-secondary">🖨️ Imprimir / Exportar PDF</a>
-    </div>-->
     <form method="get" class="row g-3 mb-4">
       <div class="col-md-4">
         <label class="form-label"><b>Filtrar por Rol</b></label>
@@ -119,10 +119,10 @@ if ($filtroRol !== '') {
                   <td><?= htmlspecialchars($val) ?></td>
                 <?php endforeach; ?>
                 <td>
-                  <a href="admin_registro.php?rol=<?= $filtroRol ?>&id=<?= $fila['id'] ?>" class="btn btn-sm btn-primary">
+                  <button type="button" class="btn btn-sm btn-primary btn-edit" data-rol="<?= $filtroRol ?>" data-id="<?= $fila['id'] ?>">
                     <i class="bi bi-pencil"></i> Editar
-                  </a>
-                  <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('¿Eliminar este registro?')) location.href='admin_delete_usuario.php?rol=<?= $filtroRol ?>&id=<?= $fila['id'] ?>';">
+                  </button>
+                  <button type="button" class="btn btn-sm btn-danger btn-delete" data-rol="<?= $filtroRol ?>" data-id="<?= $fila['id'] ?>">
                     <i class="bi bi-trash"></i> Eliminar
                   </button>
                 </td>
@@ -158,6 +158,7 @@ if ($filtroRol !== '') {
             </div>
             <div class="modal-body">
               <p>¿Está seguro que desea eliminar este registro?</p>
+              <p>Recuerde que eliminará todas las mascotas asociadas a éste usuario!!</p>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -176,25 +177,21 @@ if ($filtroRol !== '') {
       let selectedRol, selectedId;
       const editModal = new bootstrap.Modal(document.getElementById('modalConfirmEdit'));
       const deleteModal = new bootstrap.Modal(document.getElementById('modalConfirmDelete'));
-      document.querySelectorAll('.btn-edit').forEach(btn => {
-        btn.addEventListener('click', () => {
-          selectedRol = btn.dataset.rol;
-          selectedId  = btn.dataset.id;
-          editModal.show();
-        });
-      });
+      document.querySelectorAll('.btn-edit').forEach(btn => btn.addEventListener('click', () => {
+        selectedRol = btn.dataset.rol;
+        selectedId  = btn.dataset.id;
+        editModal.show();
+      }));
       document.getElementById('confirmEditBtn').addEventListener('click', () => {
-        window.location.href = `admin_registro.php?rol=${selectedRol}&id=${selectedId}`;
+        window.location.href = `admin_edit_usuarios.php?rol=${selectedRol}&id=${selectedId}`;
       });
-      document.querySelectorAll('.btn-delete').forEach(btn => {
-        btn.addEventListener('click', () => {
-          selectedRol = btn.dataset.rol;
-          selectedId  = btn.dataset.id;
-          deleteModal.show();
-        });
-      });
+      document.querySelectorAll('.btn-delete').forEach(btn => btn.addEventListener('click', () => {
+        selectedRol = btn.dataset.rol;
+        selectedId  = btn.dataset.id;
+        deleteModal.show();
+      }));
       document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
-        window.location.href = `admin_delete_usuario.php?rol=${selectedRol}&id=${selectedId}`;
+        window.location.href = `admin_delete_usuarios.php?rol=${selectedRol}&id=${selectedId}`;
       });
     });
   </script>

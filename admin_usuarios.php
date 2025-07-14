@@ -6,8 +6,12 @@ require("inc/menu_admin.php");
 
 $usuario = $_SESSION['usuario']['Nombre_Usuario'] ?? 'Administrador';
 
-// Obtener roles disponibles
-$roles = $conexion->query("SELECT ID_Rol, Nombre_Rol FROM Rol_Usuario")->fetch_all(MYSQLI_ASSOC);
+// Obtener roles disponibles (Version Anterior)
+//$roles = $conexion->query("SELECT ID_Rol, Nombre_Rol FROM Rol_Usuario")->fetch_all(MYSQLI_ASSOC);
+
+// Consulta de roles para el select, excluyendo Proveedor (ID_Rol = 4) (Version Nueva)
+$roles_result = $conexion->query("SELECT ID_Rol, Nombre_Rol FROM Rol_Usuario WHERE ID_Rol <> 4");
+$roles = $roles_result->fetch_all(MYSQLI_ASSOC);
 
 // Rol filtrado y datos iniciales
 $filtroRol = $_GET['rol'] ?? '';
@@ -18,26 +22,29 @@ if ($filtroRol !== '') {
     // Preparar consulta según rol
     switch ($idRol) {
         case 1: case 2:
-            $sql = "SELECT e.ID_Empleado AS id, e.Nombre, e.Apellido, e.Email, r.Nombre_Rol"
-                 . " FROM Empleado e"
-                 . " INNER JOIN Usuario u ON e.ID_Usuario = u.ID_Usuario"
-                 . " INNER JOIN Rol_Usuario r ON u.ID_Rol = r.ID_Rol"
-                 . " WHERE u.ID_Rol = ?";
+            $sql = "SELECT e.ID_Empleado AS id, e.Nombre, e.Apellido, e.Email, r.Nombre_Rol, 0 AS Total_Mascotas"
+            . " FROM Empleado e"
+            . " INNER JOIN Usuario u ON e.ID_Usuario = u.ID_Usuario"
+            . " INNER JOIN Rol_Usuario r ON u.ID_Rol = r.ID_Rol"
+            . " WHERE u.ID_Rol = ?";
             break;
         case 3:
-            $sql = "SELECT c.ID_Cliente AS id, c.Nombre, c.Apellido, c.Email, r.Nombre_Rol"
-                 . " FROM Cliente c"
-                 . " INNER JOIN Usuario u ON c.ID_Usuario = u.ID_Usuario"
-                 . " INNER JOIN Rol_Usuario r ON u.ID_Rol = r.ID_Rol"
-                 . " WHERE u.ID_Rol = ?";
+            $sql = "SELECT c.ID_Cliente AS id, c.Nombre, c.Apellido, c.Email, r.Nombre_Rol,"
+            . " COUNT(m.ID_Mascota) AS Total_Mascotas"
+            . " FROM Cliente c"
+            . " INNER JOIN Usuario u ON c.ID_Usuario = u.ID_Usuario"
+            . " INNER JOIN Rol_Usuario r ON u.ID_Rol = r.ID_Rol"
+            . " LEFT JOIN Mascota m ON m.ID_Cliente = c.ID_Cliente"
+            . " WHERE u.ID_Rol = ?"
+            . " GROUP BY c.ID_Cliente, c.Nombre, c.Apellido, c.Email, r.Nombre_Rol";
             break;
-        case 4:
+        /*case 4: (Omitimos Proveedor en esta versión)
             $sql = "SELECT p.ID_Proveedor AS id, p.Nombre AS Nombre, p.Empresa AS Apellido, p.Email, r.Nombre_Rol"
                  . " FROM Proveedor p"
                  . " INNER JOIN Usuario u ON p.ID_Usuario = u.ID_Usuario"
                  . " INNER JOIN Rol_Usuario r ON u.ID_Rol = r.ID_Rol"
                  . " WHERE u.ID_Rol = ?";
-            break;
+            break;*/
         default:
             $sql = null;
     }
