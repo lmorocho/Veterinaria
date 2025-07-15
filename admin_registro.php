@@ -9,6 +9,7 @@ $usuario = $_SESSION['usuario']['Nombre_Usuario'] ?? 'Administrador';
 // Consulta de roles para el select excepto para el rol de Proveedor (ID_Rol = 4)
 $roles_result = $conexion->query("SELECT ID_Rol, Nombre_Rol FROM Rol_Usuario where ID_Rol != 4");
 $roles = $roles_result->fetch_all(MYSQLI_ASSOC);
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -43,17 +44,38 @@ $roles = $roles_result->fetch_all(MYSQLI_ASSOC);
   <div class="container mt-4">
     <h2 class="text mb-4">Datos del Usuario</h2>
 
+     <!-- Mostrar modal error -->
+    <?php if (isset($_SESSION['modal_error'])): ?>
+    <div class="modal fade show" id="modalError" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" style="display:block; background: rgba(0,0,0,0.5);">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-warning text-white">
+            <h5 class="modal-title fs-5">Registro de guardado con Error</h5>
+          </div>
+          <div class="modal-body">
+            <?= htmlspecialchars($_SESSION['modal_error']); unset($_SESSION['modal_error']); ?>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="window.location='admin_registro.php';">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <?php endif; ?>
+
+    <!-- Mostrar modal de registro guardado -->
     <?php if (isset($_SESSION['modal_exito'])): ?>
     <div class="modal fade show" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" style="display:block; background: rgba(0,0,0,0.5);">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header bg-dark text-white">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Registro exitoso</h1>
+            <h5 class="modal-title fs-5" id="staticBackdropLabel">Registro exitoso</h5>
           </div>
           <div class="modal-body">
             <?= htmlspecialchars($_SESSION['modal_exito']); unset($_SESSION['modal_exito']); ?>
           </div>
           <div class="modal-footer">
+            <a href="admin_dashboard.php" class="btn btn-secondary">Cancelar</a>
             <a href="admin_registro.php" class="btn btn-primary">Registrar otro</a>
           </div>
         </div>
@@ -82,17 +104,17 @@ $roles = $roles_result->fetch_all(MYSQLI_ASSOC);
           </div>
           <div class="mb-3">
             <label>Teléfono</label>
-            <input type="text" name="telefono" class="form-control">
+            <input type="text" name="telefono" class="form-control" required>
           </div>
         </div>
         <div class="col-md-6">
           <div class="mb-3">
             <label>Dirección</label>
-            <input type="text" name="direccion" class="form-control">
+            <input type="text" name="direccion" class="form-control" required>
           </div>
           <div class="mb-3">
             <label>Fecha de Nacimiento</label>
-            <input type="date" name="fecha_nacimiento" class="form-control">
+            <input type="date" name="fecha_nacimiento" class="form-control" required>
           </div>
           <div class="mb-3">
             <label>Nombre de Usuario</label>
@@ -119,6 +141,7 @@ $roles = $roles_result->fetch_all(MYSQLI_ASSOC);
         <a href="admin_dashboard.php" class="btn btn-secondary">Cancelar</a>
       </div>
     </form>
+
   </div>
   <script src="js/bootstrap.bundle.min.js"></script>
 </body>
