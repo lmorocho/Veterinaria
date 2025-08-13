@@ -74,11 +74,19 @@ function menu_admin() {
             <li><a class="dropdown-item" href="agenda_turno_clientes.php">Agenda de Turnos</a></li>
           </ul>
         </li>
-        <!--<li class="nav-item"><a class="nav-link" href="empleado_dashboard.php">Empleado</a></li>
-        <li class="nav-item"><a class="nav-link" href="cliente_dashboard.php">Cliente</a></li>
-        <li class="nav-item"><a class="nav-link" href="proveedor_dashboard.php">Proveedor</a></li>-->
-        <!--<li class="nav-item"><a class="nav-link" href="admin_turnos.php">Gestión de Turnos</a></li>
-        <li class="nav-item"><a class="nav-link" href="agenda_turno_clientes.php">Agenda</a></li>-->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="registroDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Gestión de Productos
+          </a>
+          <!--<ul class="dropdown-menu" aria-labelledby="registroDropdown">-->
+          <ul class="dropdown-menu dropdown-menu-dark bg-dark" aria-labelledby="registroDropdown">
+            <li><a class="dropdown-item" href="admin_dashboard.php">Listar Productos</a></li>
+            <li><a class="dropdown-item" href="admin_dashboard.php">Productos Inactivos</a></li>
+            <li><a class="dropdown-item" href="admin_dashboard.php">Stock e Inventario</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="admin_dashboard.php">Control de Stock</a></li>
+          </ul>
+        </li>
         <li class="nav-item"><a class="nav-link" href="admin_dashboard.php">Historial Médico</a></li>
       </ul>
 

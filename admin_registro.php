@@ -83,46 +83,71 @@ $roles = $roles_result->fetch_all(MYSQLI_ASSOC);
     </div>
     <?php endif; ?>
 
-    <form action="admin_guardar_registro.php" method="post">
+    <form action="admin_guardar_registro.php" method="post" class="row g-3 needs-validation" novalidate>
       <div class="row">
         <div class="col-md-6">
           <div class="mb-3">
             <label>Nombre</label>
-            <input type="text" name="nombre" class="form-control" required>
+            <input type="text" name="nombre" class="form-control only-letters" required minlength="2" maxlength="50" 
+              pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{2,50}$" title="Sólo letras y espacios (2 a 50 caracteres)">
+            <div class="invalid-feedback">Debe ingresar un nombre válido (sólo letras y espacios, 2–50).</div>
           </div>
           <div class="mb-3">
             <label>Apellido</label>
-            <input type="text" name="apellido" class="form-control" required>
+            <!--<input type="text" name="apellido" class="form-control" required>-->
+            <input type="text" id="apellido" name="apellido" class="form-control only-letters" required minlength="2" maxlength="50"
+               pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ ]{2,50}$" title="Sólo letras y espacios (2 a 50 caracteres)">
+              <div class="invalid-feedback">Debe ingresar un apellido válido (sólo letras y espacios, 2–50).</div>
           </div>
           <div class="mb-3">
             <label>DNI</label>
-            <input type="text" name="dni" class="form-control" required>
+            <!--<input type="text" name="dni" class="form-control" required>-->
+            <input type="text" id="dni" name="dni" class="form-control" required inputmode="numeric" minlength="7" maxlength="10"
+               pattern="^\d{7,10}$" title="Ingrese sólo números (7 a 10 dígitos)">
+              <div class="invalid-feedback">Ingrese un DNI válido (7 a 10 dígitos).</div>
           </div>
           <div class="mb-3">
             <label>Email</label>
-            <input type="email" name="email" class="form-control" required>
+            <!--<input type="email" name="email" class="form-control" required>-->
+            <input type="email" id="email" name="email" class="form-control email-field" required maxlength="100"
+               inputmode="email" autocomplete="email"
+               pattern="^[^ @]+@[^ @]+[.][^ @]{2,}$" title="Ingresa un email válido (ej: usuario@dominio.com)">
+            <div class="invalid-feedback">Debe ingresar un email válido.</div>
           </div>
           <div class="mb-3">
             <label>Teléfono</label>
-            <input type="text" name="telefono" class="form-control" required>
+            <!--<input type="text" name="telefono" class="form-control" required>-->
+            <input type="text" id="telefono" name="telefono" class="form-control only-phone" inputmode="tel" minlength="10" maxlength="14"
+               pattern="^\+?\d{10,14}$" title="Formato: opcional + y 10 a 14 dígitos">
+               <div class="invalid-feedback">Ingrese un Telefono válido (10 a 14 dígitos).</div>
           </div>
         </div>
         <div class="col-md-6">
           <div class="mb-3">
             <label>Dirección</label>
-            <input type="text" name="direccion" class="form-control" required>
+            <!--<input type="text" name="direccion" class="form-control" required>-->
+            <input type="text" id="direccion" name="direccion" class="form-control" minlength="4" maxlength="100">
           </div>
           <div class="mb-3">
             <label>Fecha de Nacimiento</label>
-            <input type="date" name="fecha_nacimiento" class="form-control" required>
+            <!--<input type="date" name="fecha_nacimiento" class="form-control" required>-->
+            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" required max="<?= $maxDate ?>"
+               title="Debe tener al menos 10 años">
+            <div class="invalid-feedback">Debe ingresar una fecha válida (al menos 10 años).</div>
           </div>
           <div class="mb-3">
             <label>Nombre de Usuario</label>
-            <input type="text" name="usuario" class="form-control" required>
+            <!--<input type="text" name="usuario" class="form-control" required>-->
+            <input type="text" id="usuario" name="usuario" class="form-control" required minlength="4" maxlength="20"
+               pattern="^[A-Za-z0-9._-]{4,20}$" title="4-20 caracteres: letras, números, punto, guion y guion bajo">
+            <div class="invalid-feedback">Usuario inválido (4-20: letras, números, ., _ o -).</div>
           </div>
           <div class="mb-3">
             <label>Contraseña</label>
-            <input type="password" name="password" class="form-control" required>
+            <!--<input type="password" name="password" class="form-control" required>-->
+            <input type="password" id="password" name="password" class="form-control" required minlength="8"
+               pattern="^(?=.*[A-Za-z])(?=.*\d).{8,}$" title="Mínimo 8 caracteres, al menos 1 letra y 1 número">
+            <div class="invalid-feedback">Mínimo 8, con al menos 1 letra y 1 número.</div>
           </div>
           <div class="mb-3">
             <label>Tipo de Rol</label>
@@ -144,5 +169,140 @@ $roles = $roles_result->fetch_all(MYSQLI_ASSOC);
 
   </div>
   <script src="js/bootstrap.bundle.min.js"></script>
+  <script>
+    //Validación de los textbox con un js//
+    (function() {
+    'use strict';
+    // Bootstrap validation
+      const forms = document.querySelectorAll('.needs-validation');
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+
+      // Teclas de navegación permitidas
+      const navKeys = ['Backspace','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Tab','Home','End','Enter'];
+
+      // Bloquear números en campos sólo letras (keydown y sanitizar en input/paste)
+      document.querySelectorAll('.only-letters').forEach(input => {
+        input.setAttribute('inputmode', 'text');
+        input.addEventListener('keydown', e => {
+          if (navKeys.includes(e.key) || e.ctrlKey || e.metaKey || e.altKey) return;
+          if (/^[0-9]$/.test(e.key)) e.preventDefault();
+        });
+        input.addEventListener('input', e => {
+          e.target.value = e.target.value.replace(/[0-9]/g, '');
+        });
+        input.addEventListener('paste', e => {
+          e.preventDefault();
+          const text = (e.clipboardData || window.clipboardData).getData('text');
+          const clean = text.replace(/[0-9]/g, '');
+          const start = e.target.selectionStart;
+          const end = e.target.selectionEnd;
+          const val = e.target.value;
+          e.target.value = val.slice(0, start) + clean + val.slice(end);
+          const pos = start + clean.length;
+          e.target.setSelectionRange(pos, pos);
+        });
+      });
+
+      // Aceptar sólo números en DNI (keydown / input / paste)
+      const dniInput = document.getElementById('dni');
+      if (dniInput) {
+        dniInput.setAttribute('inputmode', 'numeric');
+        const max = parseInt(dniInput.getAttribute('maxlength') || '0', 10);
+
+        dniInput.addEventListener('keydown', e => {
+          if (navKeys.includes(e.key) || e.ctrlKey || e.metaKey || e.altKey) return;
+          if (!/^[0-9]$/.test(e.key)) { e.preventDefault(); return; }
+          if (max && dniInput.value.length >= max && dniInput.selectionStart === dniInput.selectionEnd) {
+            e.preventDefault();
+          }
+        });
+
+        dniInput.addEventListener('input', e => {
+          let v = e.target.value.replace(/[^0-9]/g, '');
+          if (max) v = v.slice(0, max);
+          e.target.value = v;
+        });
+
+        dniInput.addEventListener('paste', e => {
+          e.preventDefault();
+          const text = (e.clipboardData || window.clipboardData).getData('text') || '';
+          let clean = text.replace(/[^0-9]/g, '');
+          const start = dniInput.selectionStart;
+          const end = dniInput.selectionEnd;
+          const val = dniInput.value;
+          let next = val.slice(0, start) + clean + val.slice(end);
+          if (max) next = next.slice(0, max);
+          dniInput.value = next;
+          const pos = Math.min(start + clean.length, next.length);
+          dniInput.setSelectionRange(pos, pos);
+        });
+      }
+
+      // Aceptar sólo números en telefono (keydown / input / paste)
+      const phoneInput = document.getElementById('telefono');
+      if (phoneInput) {
+        phoneInput.setAttribute('inputmode', 'numeric');
+        const max = parseInt(phoneInput.getAttribute('maxlength') || '0', 10);
+
+        phoneInput.addEventListener('keydown', e => {
+          if (navKeys.includes(e.key) || e.ctrlKey || e.metaKey || e.altKey) return;
+          if (!/^[0-9]$/.test(e.key)) { e.preventDefault(); return; }
+          if (max && phoneInput.value.length >= max && phoneInput.selectionStart === phoneInput.selectionEnd) {
+            e.preventDefault();
+          }
+        });
+
+        phoneInput.addEventListener('input', e => {
+          let v = e.target.value.replace(/[^0-9]/g, '');
+          if (max) v = v.slice(0, max);
+          e.target.value = v;
+        });
+
+        phoneInput.addEventListener('paste', e => {
+          e.preventDefault();
+          const text = (e.clipboardData || window.clipboardData).getData('text') || '';
+          let clean = text.replace(/[^0-9]/g, '');
+          const start = phoneInput.selectionStart;
+          const end = phoneInput.selectionEnd;
+          const val = dniIphoneInputnput.value;
+          let next = val.slice(0, start) + clean + val.slice(end);
+          if (max) next = next.slice(0, max);
+          phoneInput.value = next;
+          const pos = Math.min(start + clean.length, next.length);
+          phoneInput.setSelectionRange(pos, pos);
+        });
+      }
+
+      // Validación en vivo de email (sin espacios, debe contener '@' y un punto después)
+      const emailInput = document.getElementById('email');
+      if (emailInput) {
+        emailInput.setAttribute('inputmode','email');
+        // Bloquear espacios
+        emailInput.addEventListener('keydown', e => { if (e.key === ' ') e.preventDefault(); });
+        emailInput.addEventListener('input', e => {
+          // Quitar espacios
+          if (typeof e.target.value.replaceAll === 'function') {
+            e.target.value = e.target.value.replaceAll(' ', '');
+          } else {
+            e.target.value = e.target.value.split(' ').join('');
+          }
+          const val = e.target.value;
+          const at  = val.indexOf('@');
+          const dot = at >= 0 ? val.indexOf('.', at + 2) : -1; // punto después de al menos 1 char tras '@'
+          const valid = at > 0 && dot > at + 1 && dot < val.length - 1;
+          e.target.setCustomValidity(valid ? '' : 'Formato de email inválido (ej: usuario@dominio.com)');
+        });
+        emailInput.addEventListener('paste', () => { setTimeout(() => emailInput.dispatchEvent(new Event('input')), 0); });
+      }
+    })();
+  </script>
 </body>
 </html>

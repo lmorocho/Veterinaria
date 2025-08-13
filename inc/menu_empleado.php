@@ -38,7 +38,19 @@ function menu_empleado() {
         </li>
         <li class="nav-item"><a class="nav-link" href="empleado_report.php">Reporte Clientes y Mascotas</a></li>
         <li class="nav-item"><a class="nav-link" href="empleado_dashboard.php">Gestión de Turnos</a></li>
-        <li class="nav-item"><a class="nav-link" href="empleado_dashboard.php">Agenda</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="registroDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Gestión de Productos
+          </a>
+          <!--<ul class="dropdown-menu" aria-labelledby="registroDropdown">-->
+          <ul class="dropdown-menu dropdown-menu-dark bg-dark" aria-labelledby="registroDropdown">
+            <li><a class="dropdown-item" href="empleado_dashboard.php">Listar Productos</a></li>
+            <li><a class="dropdown-item" href="empleado_dashboard.php">Productos Inactivos</a></li>
+            <li><a class="dropdown-item" href="empleado_dashboard.php">Stock e Inventario</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="empleado_dashboard.php">Control de Stock</a></li>
+          </ul>
+        </li>
         <li class="nav-item"><a class="nav-link" href="empleado_dashboard.php">Historial Médico</a></li>
       </ul>
 

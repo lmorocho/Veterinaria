@@ -35,7 +35,7 @@ JOIN Especie e  ON r.ID_Especie = e.ID_Especie
 JOIN Cliente c  ON m.ID_Cliente = c.ID_Cliente
 JOIN Usuario u  ON c.ID_Usuario = u.ID_Usuario
 {$whereSQL}
-ORDER BY m.ID_Mascota";
+ORDER BY c.ID_Cliente, m.ID_Mascota";
 $resultado = $conexion->query($query);
 
 // Obtener opciones de filtro
