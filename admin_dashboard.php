@@ -39,18 +39,21 @@
     }
   </style>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
   <?php menu_admin(); ?>
 
   <div class="alert alert-warning text-center fst-italic mt-0" role="alert"><!--Color cambiado a warning-->
     <h4>Bienvenido <?= htmlspecialchars($usuario); ?> al Panel de Administración del Sistema de Veterinaria.</h4>
   </div>
-  <!-- Dashboard Veterinaria con estadística de los clientes y mascotas -->
-  <br><br><br><br><br><br><br><br><br><br><br><br><br>
-  <?/*php dashboard(); */?>
-
-  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <!-- Dashboard Veterinaria con estadística de los clientes y mascotas -->  
+  <?php dashboard(); ?>
+  <!--<section class="mt-auto">
+    <div class="container-fluid px-0">
+      <?php /*dashboard(); */?>
+    </div>
+  </section>-->
+    
   <?php chatbot(); ?>
   
   <script src="js/bootstrap.bundle.min.js"></script>

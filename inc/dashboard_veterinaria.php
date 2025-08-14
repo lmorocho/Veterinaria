@@ -39,68 +39,65 @@ function dashboard(){
     $totalGatos = $res->fetch_assoc()['total'] ?? 0;
 ?>
     <div class="numbers">
-      <div class="text-bg-secondary p-3">
-        <br>
-        <div class="row text-center">
+        <div class="text-bg-secondary p-3">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3 text-center">
+
             <!-- Clientes -->
-            <div class="col-3">
-                <div class="d-flex justify-content-center">
-                    <div class="card mb-3" style="width: 22rem;">
-                        <div class="card-header bg-dark text-white">
-                            <i class="bi bi-people-fill me-2"></i>
-                            <h6>Total Clientes</h6>
-                        </div>
-                        <div class="card-body bg-warning text-dark">
-                            <h2><?= $totalClientes ?></h2>
-                        </div>
-                    </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                <div class="card-header bg-dark text-white d-flex align-items-center justify-content-center">
+                    <i class="bi bi-people-fill me-2"></i>
+                    <h6 class="mb-0">Total Clientes</h6>
+                </div>
+                <div class="card-body bg-warning text-dark d-flex align-items-center justify-content-center">
+                    <div class="display-5 fw-bold"><?= number_format($totalClientes) ?></div>
+                </div>
                 </div>
             </div>
+
             <!-- Mascotas -->
-            <div class="col-3">
-                <div class="d-flex justify-content-center">
-                    <div class="card mb-3" style="width: 22rem;">
-                        <div class="card-header bg-dark text-white">
-                            <i class="fa fa-paw me-2"></i>
-                            <h6>Total Mascotas</h6>
-                        </div>
-                        <div class="card-body bg-warning text-dark">
-                            <h2><?= $totalMascotas ?></h2>
-                        </div>
-                    </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                <div class="card-header bg-dark text-white d-flex align-items-center justify-content-center">
+                    <i class="fa fa-paw me-2"></i>
+                    <h6 class="mb-0">Total Mascotas</h6>
+                </div>
+                <div class="card-body bg-warning text-dark d-flex align-items-center justify-content-center">
+                    <div class="display-5 fw-bold"><?= number_format($totalMascotas) ?></div>
+                </div>
                 </div>
             </div>
-          <!-- Perros -->
-            <div class="col-3">
-                <div class="d-flex justify-content-center">
-                    <div class="card mb-3" style="width: 22rem;">
-                        <div class="card-header bg-dark text-white">
-                            <i class="fa fa-paw me-2"></i>
-                            <h6>Total Perros</h6>
-                        </div>
-                        <div class="card-body bg-warning text-dark">
-                            <h2><?= $totalPerros ?></h2>
-                        </div>
-                    </div>
+
+            <!-- Perros -->
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                <div class="card-header bg-dark text-white d-flex align-items-center justify-content-center">
+                    <i class="fa fa-paw me-2"></i>
+                    <h6 class="mb-0">Total Perros</h6>
+                </div>
+                <div class="card-body bg-warning text-dark d-flex align-items-center justify-content-center">
+                    <div class="display-5 fw-bold"><?= number_format($totalPerros) ?></div>
+                </div>
                 </div>
             </div>
+
             <!-- Gatos -->
-            <div class="col-3">
-                <div class="d-flex justify-content-center">
-                    <div class="card mb-3" style="width: 22rem;">
-                        <div class="card-header bg-dark text-white">
-                            <i class="fa fa-paw me-2"></i>
-                            <h6>Total Gatos</h6>
-                        </div>
-                        <div class="card-body bg-warning text-dark">
-                            <h2><?= $totalGatos ?></h2>
-                        </div>
-                    </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                <div class="card-header bg-dark text-white d-flex align-items-center justify-content-center">
+                    <i class="fa fa-paw me-2"></i>
+                    <h6 class="mb-0">Total Gatos</h6>
                 </div>
+                <div class="card-body bg-warning text-dark d-flex align-items-center justify-content-center">
+                    <div class="display-5 fw-bold"><?= number_format($totalGatos) ?></div>
+                </div>
+                </div>
+            </div>
+
             </div>
         </div>
-      </div>
     </div>
+
 <?php
 }  // fin de dashboard()
 ?>

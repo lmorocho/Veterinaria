@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-07-2025 a las 00:39:37
+-- Tiempo de generación: 14-08-2025 a las 01:39:10
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -74,7 +74,8 @@ CREATE TABLE `backup_usuarios` (
 --
 
 INSERT INTO `backup_usuarios` (`ID_Backup`, `Tipo_Perfil`, `ID_Original`, `ID_Usuario`, `Nombre`, `Apellido`, `DNI`, `Fecha_Nacimiento`, `Email`, `Telefono`, `Direccion`, `Nombre_Usuario`, `Password`, `ID_Rol`, `Fecha_Backup`) VALUES
-(3, 'Cliente', 8, 16, 'Cliente3', 'Cliente3', '13678987', '2000-01-01', 'cliente3@cliente.com', '1112345678', 'cliente3', 'cliente3', '123', 3, '2025-07-04 21:47:57');
+(3, 'Cliente', 8, 16, 'Cliente3', 'Cliente3', '13678987', '2000-01-01', 'cliente3@cliente.com', '1112345678', 'cliente3', 'cliente3', '123', 3, '2025-07-04 21:47:57'),
+(4, 'Cliente', 9, 18, 'cliente5', 'cliente5', '13679213', '0000-00-00', 'cliente5@cliente.com', '', 'asdfasddasda', 'tcliente5', '123', 3, '2025-07-15 19:12:45');
 
 -- --------------------------------------------------------
 
@@ -101,7 +102,8 @@ CREATE TABLE `cliente` (
 INSERT INTO `cliente` (`ID_Cliente`, `Nombre`, `Apellido`, `DNI`, `Telefono`, `Email`, `Direccion`, `Fecha_Nacimiento`, `ID_Usuario`) VALUES
 (2, 'Test_cliente', 'Cliente', '12255688', '1578946538', 'cliente@cliente.com', 'Ayacucho 449', '2010-02-01', 8),
 (4, 'Test_cliente-2', 'Cliente2', '0916729482', '01578946538', 'cliente2@cliente2.com', 'Ayacucho 449', '1984-02-20', 10),
-(7, 'cliente4', 'cliente4', '4697354355', '', 'cliente4@cliente.com', '', '2015-01-14', 14);
+(7, 'cliente4', 'cliente4', '4697354355', '', 'cliente4@cliente.com', '', '2015-01-14', 14),
+(10, 'cliente6', 'cliente6', '11111111', '', 'cliente6@cliente.com', '', '0000-00-00', 19);
 
 -- --------------------------------------------------------
 
@@ -113,7 +115,14 @@ CREATE TABLE `compra` (
   `ID_Compra` int(11) NOT NULL,
   `Fecha` date NOT NULL,
   `ID_Proveedor` int(11) NOT NULL,
-  `Total` decimal(10,2) DEFAULT NULL
+  `Total` decimal(10,2) DEFAULT NULL,
+  `Tipo_Comprobante` varchar(50) NOT NULL,
+  `Numero_Comprobante` varchar(100) NOT NULL,
+  `Estado_Compra` varchar(50) NOT NULL DEFAULT 'Pendiente',
+  `Fecha_Pago` date DEFAULT NULL,
+  `Metodo_Pago` varchar(50) DEFAULT NULL,
+  `Observaciones` text DEFAULT NULL,
+  `ID_Usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -168,14 +177,14 @@ CREATE TABLE `empleado` (
 --
 
 INSERT INTO `empleado` (`ID_Empleado`, `Nombre`, `Apellido`, `DNI`, `Fecha_Nacimiento`, `Email`, `Telefono`, `ID_Usuario`, `Direccion`) VALUES
-(1, 'Luis', 'Morocho', '94429778', '1982-05-29', 'lmorocho@gmail.com', '1160082041', 1, NULL),
-(2, 'Mariano País', 'Garay', '29567456', '1980-11-25', 'mpgaray@gmail.com', '1133445566', 2, NULL),
-(3, 'Ariel', 'Toneguzzi', '28456123', '1970-03-14', 'atoneguzzi@gmail.com', '1144556677', 3, NULL),
-(4, 'Agustín', 'Arufe', '27894561', '1990-09-09', 'aarufe@gmail.com', '1155667788', 4, NULL),
-(5, 'admin', 'admin_append', '13579135', '0000-00-00', 'admin@admin.com', '', 9, ''),
-(9, 'Test_empleado', 'Empleado', '12345678', '2025-05-01', 'empleado@empleado.com', '43534775456', 7, 'Ayacucho 447'),
-(10, 'Juanito', 'Alimaña', '2468135', '1980-05-29', 'juanitoa@empleado.com', '', 11, ''),
-(11, 'Empleado3', 'Empleado3', '54654898', '1980-03-15', 'empleado3@empleado.com', '', 15, '');
+(1, 'Luis', 'Morocho', '94429778', '1982-05-29', 'lmorocho@gmail.com', '1160082041', 1, 'SD'),
+(2, 'Mariano País', 'Garay', '29567456', '1980-11-25', 'mpgaray@gmail.com', '1133445566', 2, 'SD'),
+(3, 'Ariel', 'Toneguzzi', '28456123', '1970-03-14', 'atoneguzzi@gmail.com', '1144556677', 3, 'SD'),
+(4, 'Agustín', 'Arufe', '27894561', '1990-09-09', 'aarufe@gmail.com', '1155667788', 4, 'SD'),
+(5, 'admin', 'admin_append', '13579135', '0000-00-00', 'admin@admin.com', '', 9, 'SD'),
+(9, 'Test_empleado', 'Empleado', '12345678', '2025-05-01', 'empleado@empleado.com', '43534775456', 7, 'SD'),
+(10, 'Juanito', 'Alimaña', '2468135', '1980-05-29', 'juanitoa@empleado.com', '', 11, 'SD'),
+(11, 'Empleado3', 'Empleado3', '54654898', '1980-03-15', 'empleado3@empleado.com', '', 15, 'SD');
 
 -- --------------------------------------------------------
 
@@ -289,7 +298,12 @@ CREATE TABLE `producto` (
   `ID_Producto` int(11) NOT NULL,
   `Nombre` varchar(100) NOT NULL,
   `Descripcion` text DEFAULT NULL,
-  `ID_Tipo_Producto` int(11) NOT NULL
+  `ID_Tipo_Producto` int(11) NOT NULL,
+  `Estado` tinyint(1) NOT NULL DEFAULT 1,
+  `Precio_Venta` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `Stock_Actual` int(11) NOT NULL DEFAULT 0,
+  `Stock_Minimo` int(11) NOT NULL DEFAULT 0,
+  `ID_Proveedor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -309,6 +323,16 @@ CREATE TABLE `proveedor` (
   `ID_Usuario` int(11) NOT NULL,
   `DNI` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `proveedor`
+--
+
+INSERT INTO `proveedor` (`ID_Proveedor`, `Nombre`, `Apellido`, `Empresa`, `Telefono`, `Email`, `Direccion`, `ID_Usuario`, `DNI`) VALUES
+(1, 'Proveedor1', 'Proveedor1', 'Proveedor1', '4839739932', 'proveerdor1@proveedor.com', 'Buenos Aires', 17, '987654321'),
+(2, 'Proveedor2', 'Proveedor2', 'ALFA SA', '1145001111', 'info@alfa.com', 'Av. Corrientes 1000,CABA', 20, '45454545'),
+(3, 'proveedor3', 'proveedor3', 'BET NET', '3414500222', 'ventas@beta.net', 'Calle Ficticia 500, Buenos Aires', 21, '1212121212'),
+(4, 'proveedor4', 'proveedor4', 'GAMMA', '11469922222', 'contacto@gamma.org', 'Av. Colón 2000, Buenos Aires', 22, '27272727');
 
 -- --------------------------------------------------------
 
@@ -386,6 +410,15 @@ CREATE TABLE `tipo_producto` (
   `Nombre_Tipo` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `tipo_producto`
+--
+
+INSERT INTO `tipo_producto` (`ID_Tipo_Producto`, `Nombre_Tipo`) VALUES
+(1, 'Clínica'),
+(2, 'Alimento'),
+(3, 'Peluquería');
+
 -- --------------------------------------------------------
 
 --
@@ -430,16 +463,11 @@ INSERT INTO `turno` (`ID_Turno`, `Fecha`, `Hora`, `ID_Mascota`, `ID_Empleado`, `
 (5, '2025-06-16', '11:00:00', 5, 5, 1),
 (6, '2025-06-16', '13:00:00', 11, 5, 1),
 (7, '2025-06-16', '10:00:00', 15, 5, 2),
-(8, '2025-06-16', '15:00:00', 15, 5, 3),
 (9, '2025-06-16', '12:00:00', 15, 5, 2),
 (10, '2025-06-16', '10:00:00', 9, 5, 1),
-(11, '2025-06-16', '14:00:00', 15, 5, 2),
-(12, '2025-06-16', '11:00:00', 15, 5, 2),
 (13, '2025-06-16', '12:00:00', 6, 5, 1),
 (14, '2025-06-23', '09:00:00', 13, 5, 3),
-(15, '2025-06-24', '10:00:00', 15, 5, 3),
-(16, '2025-06-24', '09:00:00', 5, 5, 2),
-(17, '2025-06-23', '10:00:00', 11, 5, 3);
+(16, '2025-06-24', '09:00:00', 5, 5, 2);
 
 -- --------------------------------------------------------
 
@@ -469,7 +497,12 @@ INSERT INTO `usuario` (`ID_Usuario`, `Nombre_Usuario`, `Password`, `ID_Rol`) VAL
 (10, 't2cliente', '123', 3),
 (11, 'jaempleado', '123', 2),
 (14, 'cliente4', '123', 3),
-(15, 'empleado3', '123', 2);
+(15, 'empleado3', '123', 2),
+(17, 'tproveedor', '123', 4),
+(19, 'cliente6', '123', 3),
+(20, 'proveedor2', '123', 4),
+(21, 'proveedor3', '123', 4),
+(22, 'proveedor4', '123', 4);
 
 -- --------------------------------------------------------
 
@@ -517,7 +550,9 @@ ALTER TABLE `cliente`
 --
 ALTER TABLE `compra`
   ADD PRIMARY KEY (`ID_Compra`),
-  ADD KEY `ID_Proveedor` (`ID_Proveedor`);
+  ADD UNIQUE KEY `unique_numero_comprobante` (`Numero_Comprobante`),
+  ADD KEY `ID_Proveedor` (`ID_Proveedor`),
+  ADD KEY `fk_compra_usuario` (`ID_Usuario`);
 
 --
 -- Indices de la tabla `detalle_compra`
@@ -586,7 +621,8 @@ ALTER TABLE `precio`
 --
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`ID_Producto`),
-  ADD KEY `FK_Producto_Tipo` (`ID_Tipo_Producto`);
+  ADD KEY `FK_Producto_Tipo` (`ID_Tipo_Producto`),
+  ADD KEY `idx_producto_proveedor` (`ID_Proveedor`);
 
 --
 -- Indices de la tabla `proveedor`
@@ -671,13 +707,13 @@ ALTER TABLE `backup_mascotas`
 -- AUTO_INCREMENT de la tabla `backup_usuarios`
 --
 ALTER TABLE `backup_usuarios`
-  MODIFY `ID_Backup` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID_Backup` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `ID_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `compra`
@@ -743,7 +779,7 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
-  MODIFY `ID_Proveedor` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Proveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `raza`
@@ -767,7 +803,7 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT de la tabla `tipo_producto`
 --
 ALTER TABLE `tipo_producto`
-  MODIFY `ID_Tipo_Producto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Tipo_Producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_turno`
@@ -785,7 +821,7 @@ ALTER TABLE `turno`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `ID_Usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `ID_Usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `venta`
@@ -807,7 +843,8 @@ ALTER TABLE `cliente`
 -- Filtros para la tabla `compra`
 --
 ALTER TABLE `compra`
-  ADD CONSTRAINT `compra_ibfk_1` FOREIGN KEY (`ID_Proveedor`) REFERENCES `proveedor` (`ID_Proveedor`);
+  ADD CONSTRAINT `compra_ibfk_1` FOREIGN KEY (`ID_Proveedor`) REFERENCES `proveedor` (`ID_Proveedor`),
+  ADD CONSTRAINT `fk_compra_usuario` FOREIGN KEY (`ID_Usuario`) REFERENCES `usuario` (`ID_Usuario`);
 
 --
 -- Filtros para la tabla `detalle_compra`
@@ -855,7 +892,8 @@ ALTER TABLE `precio`
 -- Filtros para la tabla `producto`
 --
 ALTER TABLE `producto`
-  ADD CONSTRAINT `FK_Producto_Tipo` FOREIGN KEY (`ID_Tipo_Producto`) REFERENCES `tipo_producto` (`ID_Tipo_Producto`);
+  ADD CONSTRAINT `FK_Producto_Tipo` FOREIGN KEY (`ID_Tipo_Producto`) REFERENCES `tipo_producto` (`ID_Tipo_Producto`),
+  ADD CONSTRAINT `fk_producto_proveedor` FOREIGN KEY (`ID_Proveedor`) REFERENCES `proveedor` (`ID_Proveedor`);
 
 --
 -- Filtros para la tabla `proveedor`

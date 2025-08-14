@@ -105,9 +105,8 @@
     <?php bannerpet1(); ?>
 
     <!-- Dashboard Veterinaria con estadística de los clientes y mascotas -->
-    <?php dashboard(); ?>
-    <br><br>
-
+    <?php //dashboard(); */?>
+    
     <!-- Información de la veterinaria -->
     <div class="alert alert-secondary" role="alert">
         <h4>Tu veterinaria de confianza</h4>
